@@ -3,45 +3,39 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-  },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    paddingHorizontal: 20,
-    paddingTop: 40,
+    backgroundColor:'#E5D9F2'
   },
   main: {
+    marginTop:30,
     fontSize: 25,
-    color: 'white',
-    fontWeight: 'bold',
+    color: '#4F75FF',
+    fontWeight: '900',
     textAlign: 'center',
   },
   list: {
     flex: 1,
     marginTop: 20,
+    margin:20,
   },
   listItem: {
-    backgroundColor: '#CB80AB',
-    marginVertical: 8,
+    backgroundColor: '#FFE5CF',
+    marginVertical: 6,
     padding: 10,
     borderRadius: 10,
   },
   itemText: {
     fontSize: 18,
-    color: '#FFF',
+    fontWeight:'500',
+    color: 'black',
     textAlign:'center'
   },
   addButton: {
     position: 'absolute',
     bottom: 20,
-    marginLeft:160
+    marginLeft:180
   },
   addIcon: {
-    color:'white',
+    color:'green',
     fontSize: 50,
   },
   input: {

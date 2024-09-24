@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Categories from '../components/Categories';
 import SearchFilter from '../components/SearchFilter';
 import Expenses from '../components/Expenses';
 import Settings from '../components/Settings';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Categories from '../components/Categories';
+import CategoryStack from '../navigations/CategoryStack';
 const Tab = createBottomTabNavigator();
 
 export default function HomeScreen() {

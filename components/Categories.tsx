@@ -3,23 +3,26 @@ import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styles from '../styles/Categories'
 import Icon from 'react-native-vector-icons/Ionicons'
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCategory } from '../redux/BudgetAction'
 
-const Categories = () => {
-  const [data, setData] = useState<any>(['Transportation', 'Food']);
+const Categories = ({ navigation }: any) => {
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
+  const categories = useSelector((state: any) => state.budget.categoryList);
+  const dispatch = useDispatch();
 
-  const addData = () => {
-    setVisible(true);
-  };
+  console.log('Categories ', categories)
 
   const onSubmit = () => {
     setVisible(false);
-    // if (name.trim()) {
-    setData([...data, name]);
+    console.log('Data ---> ', name)
+    dispatch(addCategory(name));
     setName('');
-    // }
+  };
+
+  const handleProducts = (category: any) => {
+    navigation.navigate('SubCategory', { category })
   };
 
   return (
@@ -49,16 +52,17 @@ const Categories = () => {
           </Modal>
           <View style={{ flex: 1 }}>
             <FlatList
-              data={data}
+              data={categories}
               style={styles.list}
               renderItem={({ item }) => (
-                <View style={styles.listItem}>
-                  <Text style={styles.itemText}>{item}</Text>
-                  <MaterialIcon name="expand-more" style={styles.itemIcon} />
-                </View>
+                <TouchableOpacity onPress={() => handleProducts(item)}>
+                  <View style={styles.listItem}>
+                    <Text style={styles.itemText}>{item.category}</Text>
+                  </View>
+                </TouchableOpacity>
               )}
             />
-            <TouchableOpacity onPress={addData} style={styles.addButton}>
+            <TouchableOpacity onPress={() => setVisible(true)} style={styles.addButton}>
               <Icon name="add-circle-outline" style={styles.addIcon} />
             </TouchableOpacity>
           </View>
