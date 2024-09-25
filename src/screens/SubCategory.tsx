@@ -1,30 +1,34 @@
 import { Alert, FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import styles from '../styles/SubCategory'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useDispatch, useSelector } from 'react-redux'
 import { addSubcategory } from '../redux/BudgetAction'
+import styles from '../styles/SubCategory'
 
-const SubCategory = () => {
+const SubCategory = ({ route  , navigation}: any) => {
+  const { category } = route.params;
+  const categories = useSelector((state: any) => state.budget.categories);
+  const selectedCategory = categories.find((cat: any) => cat.category === category);
+  const subcategories = selectedCategory ? selectedCategory.subcategories : [];
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
-  const subcategories = useSelector((state: any) => state.budget.subcategoryList);
-  const dispatch = useDispatch();
 
-  const addData = () => {
-    setVisible(true);
-  };
-
+  console.log('Subcategoies list --->',categories)
   const onSubmit = () => {
     setVisible(false);
-    dispatch(addSubcategory(name));
+    dispatch(addSubcategory(name, category));
     setName('');
+  };
+
+  const handleSubcategoryPress = (subcategory: string) => {
+    navigation.navigate('SubCategoryItemList', { subcategory });
   };
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Text style={styles.main}>SubCategory</Text>
+      <Text style={styles.main}>{category} Subcategories</Text>
       <Modal
         animationType="fade"
         visible={visible}
@@ -35,12 +39,10 @@ const SubCategory = () => {
           <TextInput
             style={styles.input}
             onChangeText={setName}
-            placeholder="   Enter Category"
+            placeholder={`Enter subcategory for ${category}`}
             value={name}
           />
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={onSubmit}>
+          <Pressable style={[styles.button, styles.buttonClose]} onPress={onSubmit}>
             <Text style={styles.submit}>Submit</Text>
           </Pressable>
         </View>
@@ -51,13 +53,16 @@ const SubCategory = () => {
           style={styles.list}
           renderItem={({ item }) => (
             <View style={styles.listItem}>
-              <TouchableOpacity onPress={() => Alert.alert('Clicked On SubCategory')}>
-                <Text style={styles.itemText}>{item.subcategory}</Text>
+              {/* <TouchableOpacity onPress={() => Alert.alert('Clicked On SubCategory')}>
+                <Text style={styles.itemText}>{item}</Text>
+              </TouchableOpacity> */}
+              <TouchableOpacity onPress={() => handleSubcategoryPress(item)}>
+                <Text style={styles.itemText}>{item}</Text>
               </TouchableOpacity>
             </View>
           )}
         />
-        <TouchableOpacity onPress={addData} style={styles.addButton}>
+        <TouchableOpacity onPress={() => setVisible(true)} style={styles.addButton}>
           <Icon name="add-circle-outline" style={styles.addIcon} />
         </TouchableOpacity>
       </View>

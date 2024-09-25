@@ -1,19 +1,18 @@
 import { FlatList, ImageBackground, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import styles from '../styles/Categories'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useDispatch, useSelector } from 'react-redux'
 import { addCategory } from '../redux/BudgetAction'
+import styles from '../styles/Categories'
 
 const Categories = ({ navigation }: any) => {
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
-  const categories = useSelector((state: any) => state.budget.categoryList);
+  const categories = useSelector((state: any) => state.budget.categories);
   const dispatch = useDispatch();
 
-  console.log('Categories ', categories)
-
+  // console.log('categories --->',categories)
   const onSubmit = () => {
     setVisible(false);
     console.log('Data ---> ', name)
@@ -21,8 +20,8 @@ const Categories = ({ navigation }: any) => {
     setName('');
   };
 
-  const handleProducts = (category: any) => {
-    navigation.navigate('SubCategory', { category })
+  const handleCategory = (category: any) => {
+    navigation.navigate('SubCategory', { category: category.category });
   };
 
   return (
@@ -55,7 +54,7 @@ const Categories = ({ navigation }: any) => {
               data={categories}
               style={styles.list}
               renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => handleProducts(item)}>
+                <TouchableOpacity onPress={() => handleCategory(item)}>
                   <View style={styles.listItem}>
                     <Text style={styles.itemText}>{item.category}</Text>
                   </View>

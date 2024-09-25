@@ -7,8 +7,9 @@ export const addCategory = (category: string) => ({
     type: ADD_CATEGORY,
     category,
 });
-
-export const addSubcategory = (subcategory: string) => ({
+  
+  export const addSubcategory = (subcategory: string, category: string) => ({
     type: ADD_SUBCATEGORY,
     subcategory,
-});
+    category,
+  });

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/Ionicons';
+import CategoryStack from '../navigations/CategoryStack';
 import SearchFilter from '../components/SearchFilter';
 import Expenses from '../components/Expenses';
 import Settings from '../components/Settings';
-import Icon from 'react-native-vector-icons/Ionicons';
-import Categories from '../components/Categories';
-import CategoryStack from '../navigations/CategoryStack';
 const Tab = createBottomTabNavigator();
 
 export default function HomeScreen() {
@@ -13,7 +12,7 @@ export default function HomeScreen() {
     <Tab.Navigator initialRouteName="Categories" screenOptions={{
       tabBarActiveTintColor: '#e91e63', headerShown: false
     }}>
-      <Tab.Screen name="Categories" component={Categories} options={{
+      <Tab.Screen name="Categories" component={CategoryStack} options={{
         tabBarLabel: 'Categories',
         tabBarIcon: ({ color, size }) => (
           <Icon name="apps-outline" color={color} size={size} />
