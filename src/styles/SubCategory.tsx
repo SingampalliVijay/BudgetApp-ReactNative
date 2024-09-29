@@ -31,8 +31,9 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    bottom: 20,
-    marginLeft:180
+    bottom: 30,
+    // marginLeft:180
+    right:30
   },
   addIcon: {
     color:'green',
@@ -56,8 +57,6 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     padding: 10,
     margin: 5,
-  },
-  buttonClose: {
     backgroundColor: '#2196F3',
   },
   submit: {

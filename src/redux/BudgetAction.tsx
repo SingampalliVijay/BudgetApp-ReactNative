@@ -3,13 +3,19 @@ export const SET_CATEGORIES_DATA = "set_categories_data";
 export const ADD_SUBCATEGORY = "add_subcategory";
 export const SET_SUBCATEGORIES_DATA = "set_subcategories_data";
 
-export const addCategory = (category: string) => ({
-    type: ADD_CATEGORY,
+export const addCategory = (id: number, category: string) => ({
+  type: ADD_CATEGORY,
+  data: {
+    id,
     category,
+  }
 });
-  
-  export const addSubcategory = (subcategory: string, category: string) => ({
-    type: ADD_SUBCATEGORY,
+
+export const addSubcategory = (id: number, subcategory: string, category: string) => ({
+  type: ADD_SUBCATEGORY,
+  data: {
+    id,
     subcategory,
     category,
-  });
+  }
+});

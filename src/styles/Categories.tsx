@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
   addButton: {
     position: 'absolute',
-    bottom: 20,
-    marginLeft:160
+    bottom: 30,
+    right:20
   },
   addIcon: {
     color:'white',

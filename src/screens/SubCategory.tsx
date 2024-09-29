@@ -1,29 +1,33 @@
-import { Alert, FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/Ionicons'
-import { useDispatch, useSelector } from 'react-redux'
-import { addSubcategory } from '../redux/BudgetAction'
-import styles from '../styles/SubCategory'
+import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from 'react-redux';
+import { addSubcategory } from '../redux/BudgetAction';
+import styles from '../styles/SubCategory';
 
-const SubCategory = ({ route  , navigation}: any) => {
+const SubCategory = ({ route, navigation }: any) => {
   const { category } = route.params;
   const categories = useSelector((state: any) => state.budget.categories);
-  const selectedCategory = categories.find((cat: any) => cat.category === category);
-  const subcategories = selectedCategory ? selectedCategory.subcategories : [];
+  const selectedCategory = categories.find((cat: any) => cat.name === category);
+  const subcategory = selectedCategory ? selectedCategory.subcategories : [];
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
 
-  console.log('Subcategoies list --->',categories)
+  const id = subcategory.length ? Math.max(...subcategory.map((sub: any) => sub.id)) + 1 : 1;
+
+  console.log('Subcategories list --->', subcategory);
+
   const onSubmit = () => {
     setVisible(false);
-    dispatch(addSubcategory(name, category));
+    // console.log('OnSubmit Name ---> [subCategory :', name + ', Category  :' + category + ' ]');
+    dispatch(addSubcategory(id, name, category));
     setName('');
   };
 
-  const handleSubcategoryPress = (subcategory: string) => {
-    navigation.navigate('SubCategoryItemList', { subcategory });
+  const handleSubcategoryPress = (subcategoryName: string) => {
+    navigation.navigate('SubCategoryItemList', { subcategory: subcategoryName });
   };
 
   return (
@@ -39,25 +43,22 @@ const SubCategory = ({ route  , navigation}: any) => {
           <TextInput
             style={styles.input}
             onChangeText={setName}
-            placeholder={`Enter subcategory for ${category}`}
+            placeholder={'Enter subcategory'}
             value={name}
           />
-          <Pressable style={[styles.button, styles.buttonClose]} onPress={onSubmit}>
+          <Pressable style={styles.button} onPress={onSubmit}>
             <Text style={styles.submit}>Submit</Text>
           </Pressable>
         </View>
       </Modal>
       <View style={{ flex: 1 }}>
         <FlatList
-          data={subcategories}
+          data={subcategory}
           style={styles.list}
           renderItem={({ item }) => (
             <View style={styles.listItem}>
-              {/* <TouchableOpacity onPress={() => Alert.alert('Clicked On SubCategory')}>
-                <Text style={styles.itemText}>{item}</Text>
-              </TouchableOpacity> */}
-              <TouchableOpacity onPress={() => handleSubcategoryPress(item)}>
-                <Text style={styles.itemText}>{item}</Text>
+              <TouchableOpacity onPress={() => handleSubcategoryPress(item.name)}>
+                <Text style={styles.itemText}>{item.name}</Text>
               </TouchableOpacity>
             </View>
           )}
