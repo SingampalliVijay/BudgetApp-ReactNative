@@ -1,4 +1,4 @@
-import { SET_CATEGORIES_DATA, SET_SUBCATEGORIES_DATA } from "./BudgetAction";
+import { ADD_AMOUNT_TO_SUBCATEGORY, SET_CATEGORIES_DATA, SET_SUBCATEGORIES_DATA } from "./BudgetAction";
 
 const initialState: any = {
   categories: [],
@@ -28,14 +28,30 @@ export const budgetReducer = (state = initialState, action: any) => {
               ...cat, subcategories: [...cat.subcategories,
               {
                 id: action.data.id,
-                name: action.data.subcategory
+                name: action.data.subcategory,
+                amount: 0
               }
               ]
             }
             : cat
         ),
       };
-
+    case ADD_AMOUNT_TO_SUBCATEGORY:
+      return {
+        ...state,
+        categories: state.categories.map((category: any) =>
+          category.id === action.data.categoryId
+            ? {
+              ...category,
+              subcategories: category.subcategories.map((subcategory: any) =>
+                subcategory.id === action.data.subcategoryId
+                  ? {
+                    ...subcategory,
+                    amount: (subcategory.amount || 0) + action.data.amount
+                  } : subcategory)
+            } : category
+        )
+      }
     default:
       return state;
   }

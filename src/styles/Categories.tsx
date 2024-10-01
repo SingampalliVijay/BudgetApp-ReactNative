@@ -47,10 +47,11 @@ const styles = StyleSheet.create({
   input: {
     borderRadius: 10,
     borderWidth: 0.7,
-    width: '70%',
     padding: 12,
     marginVertical: 10,
     backgroundColor: '#FFF',
+    margin:10,
+    marginBottom:20
   },
   centeredView: {
     flex: 1,
@@ -59,11 +60,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   button: {
+    marginLeft:50,
     borderRadius: 7,
     padding: 10,
-    margin: 5,
-  },
-  buttonClose: {
+    width:'60%',
     backgroundColor: '#2196F3',
   },
   submit: {
@@ -71,6 +71,16 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
+  modalView:{
+    padding:15,
+    borderRadius:10,
+    borderWidth:1,
+    borderColor:'white',
+    width:'80%',
+    height:170,
+    backgroundColor:'white'
+
+  }
 });
 
 export default styles;

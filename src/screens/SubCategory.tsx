@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSubcategory } from '../redux/BudgetAction';
 import styles from '../styles/SubCategory';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
 const SubCategory = ({ route, navigation }: any) => {
   const { category } = route.params;
@@ -21,13 +22,8 @@ const SubCategory = ({ route, navigation }: any) => {
 
   const onSubmit = () => {
     setVisible(false);
-    // console.log('OnSubmit Name ---> [subCategory :', name + ', Category  :' + category + ' ]');
     dispatch(addSubcategory(id, name, category));
     setName('');
-  };
-
-  const handleSubcategoryPress = (subcategoryName: string) => {
-    navigation.navigate('SubCategoryItemList', { subcategory: subcategoryName });
   };
 
   return (
@@ -40,15 +36,17 @@ const SubCategory = ({ route, navigation }: any) => {
         onRequestClose={() => setVisible(false)}
       >
         <View style={styles.centeredView}>
-          <TextInput
-            style={styles.input}
-            onChangeText={setName}
-            placeholder={'Enter subcategory'}
-            value={name}
-          />
-          <Pressable style={styles.button} onPress={onSubmit}>
-            <Text style={styles.submit}>Submit</Text>
-          </Pressable>
+          <View style={styles.modalView}>
+            <TextInput
+              style={styles.input}
+              onChangeText={setName}
+              placeholder={'Enter subcategory'}
+              value={name}
+            />
+            <Pressable style={styles.button} onPress={onSubmit}>
+              <Text style={styles.submit}>Add</Text>
+            </Pressable>
+          </View>
         </View>
       </Modal>
       <View style={{ flex: 1 }}>
@@ -56,10 +54,12 @@ const SubCategory = ({ route, navigation }: any) => {
           data={subcategory}
           style={styles.list}
           renderItem={({ item }) => (
-            <View style={styles.listItem}>
-              <TouchableOpacity onPress={() => handleSubcategoryPress(item.name)}>
+            <View style={[styles.listItem]}>
                 <Text style={styles.itemText}>{item.name}</Text>
-              </TouchableOpacity>
+                <View style={styles.amount}>
+                <MaterialIcon name='currency-rupee' style={styles.icon} />
+                <Text style={styles.amountText}>{item.amount}</Text>
+                </View>
             </View>
           )}
         />

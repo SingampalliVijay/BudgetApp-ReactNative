@@ -23,6 +23,7 @@ const ItemList = ({ navigation }: any) => {
                     </View>
                 )}
             />
+            
             <View style={styles.homeView}>
                 <TouchableOpacity>
                     <Icon name='add-circle-outline' style={styles.button} />

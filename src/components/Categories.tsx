@@ -1,5 +1,5 @@
 import { FlatList, ImageBackground, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useId, useState } from 'react'
+import React, { useEffect, useId, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ const Categories = ({ navigation }: any) => {
   const id = categories.length ? Math.max(...categories.map((cat: any) => cat.id)) + 1 : 1;
 
   // console.log('categories --->', categories)
-  console.log('Categories ---> ',JSON.stringify(categories))
+  console.log('Categories ---> ', JSON.stringify(categories))
   const onSubmit = () => {
     setVisible(false);
     console.log('Data ---> ', name)
@@ -38,17 +38,19 @@ const Categories = ({ navigation }: any) => {
             onRequestClose={() => setVisible(false)}
           >
             <View style={styles.centeredView}>
-              <TextInput
-                style={styles.input}
-                onChangeText={setName}
-                placeholder="   Enter new Category"
-                value={name}
-              />
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={onSubmit}>
-                <Text style={styles.submit}>Submit</Text>
-              </Pressable>
+              <View style={styles.modalView}>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={setName}
+                  placeholder="   Enter new Category"
+                  value={name}
+                />
+                <Pressable
+                  style={styles.button}
+                  onPress={onSubmit}>
+                  <Text style={styles.submit}>Add</Text>
+                </Pressable>
+              </View>
             </View>
           </Modal>
           <View style={{ flex: 1 }}>
