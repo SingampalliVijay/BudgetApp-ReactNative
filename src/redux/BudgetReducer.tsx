@@ -36,22 +36,23 @@ export const budgetReducer = (state = initialState, action: any) => {
             : cat
         ),
       };
-    case ADD_AMOUNT_TO_SUBCATEGORY:
-      return {
-        ...state,
-        categories: state.categories.map((category: any) =>
-          category.id === action.data.categoryId
-            ? {
-              ...category,
-              subcategories: category.subcategories.map((subcategory: any) =>
-                subcategory.id === action.data.subcategoryId
-                  ? {
-                    ...subcategory,
-                    amount: (subcategory.amount || 0) + action.data.amount
-                  } : subcategory)
-            } : category
-        )
-      }
+      case ADD_AMOUNT_TO_SUBCATEGORY:
+              // console.log('Action   ---->', action)
+        return {
+          ...state,
+          categories: state.categories.map((category: any) =>
+            category.id === action.data.categoryId
+              ? {
+                ...category,
+                subcategories: category.subcategories.map((subcategory: any) =>
+                  subcategory.id === action.data.subcategoryId
+                    ? {
+                      ...subcategory,
+                      amount: subcategory.amount + action.data.amount
+                    } : subcategory)
+              } : category
+          )
+        }
     default:
       return state;
   }

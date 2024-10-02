@@ -3,28 +3,26 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor:'#EDDFE0'
+        backgroundColor: '#EDDFE0'
     },
     title: {
-        padding: 20,
-        marginTop: 20,
         fontSize: 30,
-        fontWeight:'800',
+        fontWeight: '800',
         color: '#1E3E62',
-        textAlign: 'center'
+        textAlign: 'center',
+        margin: 10
     },
     card: {
         borderWidth: 1,
         borderColor: 'gray',
         padding: 10,
         margin: 10,
-        marginTop: 50,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.3,
         shadowRadius: 3.84,
-        elevation:2,
-        backgroundColor:'white'
+        elevation: 3,
+        backgroundColor: 'white'
     },
     dropdownView: {
         padding: 10
@@ -42,7 +40,7 @@ const styles = StyleSheet.create({
     },
     selectedTextStyle: {
         fontSize: 16,
-        color:'black'
+        color: 'black'
     },
     inputSearchStyle: {
         height: 40,
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
     },
     dob: {
         padding: 10,
-        color:'black'
+        color: 'black'
     },
     date: {
         fontSize: 15,
@@ -93,6 +91,18 @@ const styles = StyleSheet.create({
         color: 'black',
         marginLeft: 20
     },
+    notes: {
+        borderWidth: 1,
+        borderRadius: 10,
+        margin: 10,
+        width: '89%',
+        marginLeft: 20,
+        borderColor: 'gray',
+        height: 100
+    },
+    notesText: {
+        padding: 10
+    },
     button: {
         marginLeft: 70,
         borderRadius: 7,
@@ -100,13 +110,20 @@ const styles = StyleSheet.create({
         width: '60%',
         backgroundColor: '#2196F3',
         borderColor: 'gray',
-        marginTop: 20,
-        marginBottom:20
     },
     submit: {
         fontSize: 20,
         color: 'white',
         textAlign: 'center',
+    },
+    addButton: {
+        position: 'absolute',
+        bottom: 30,
+        right: 30
+    },
+    addIcon: {
+        color: 'green',
+        fontSize: 50,
     },
 });
 export default styles;

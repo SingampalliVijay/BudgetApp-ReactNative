@@ -25,24 +25,29 @@ const styles = StyleSheet.create({
     marginVertical: 6,
     padding: 10,
     borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3.84,
+    elevation: 3,
   },
   itemText: {
     fontSize: 18,
     fontWeight: '500',
     color: 'black',
     margin: 15,
-    marginLeft:30
+    marginLeft: 30
   },
   amount: {
-    flexDirection:'row',
-    position:'absolute',
-    right:30
+    flexDirection: 'row',
+    position: 'absolute',
+    right: 30
   },
-  amountText:{
-    color:'green',
-    fontSize:25,
-    fontWeight:'400',
-    padding:10,
+  amountText: {
+    color: 'green',
+    fontSize: 25,
+    fontWeight: '400',
+    padding: 10,
   },
   icon: {
     fontSize: 20,

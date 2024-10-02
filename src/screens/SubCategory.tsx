@@ -7,7 +7,7 @@ import { addSubcategory } from '../redux/BudgetAction';
 import styles from '../styles/SubCategory';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-const SubCategory = ({ route, navigation }: any) => {
+const SubCategory = ({ route}: any) => {
   const { category } = route.params;
   const categories = useSelector((state: any) => state.budget.categories);
   const selectedCategory = categories.find((cat: any) => cat.name === category);
