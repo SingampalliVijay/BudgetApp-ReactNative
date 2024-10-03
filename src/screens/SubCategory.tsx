@@ -16,6 +16,7 @@ const SubCategory = ({ route }: any) => {
   const [name, setName] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [visible, setVisible] = useState(false);
+  const [isSearch, setIsSearch] = useState(false)
   const id = subcategory.length ? Math.max(...subcategory.map((sub: any) => sub.id)) + 1 : 1;
 
   const searchSubcategory = subcategory.filter((cat: any) =>
@@ -35,17 +36,27 @@ const SubCategory = ({ route }: any) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.search}>
-        <Icon name="search" size={20} color="#000" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search Here..."
-          value={searchQuery}
-          onChangeText={handleSearch}
-          placeholderTextColor="#ccc"
-        />
-      </View>
-      <Text style={styles.main}>{category} Subcategories</Text>
+      {isSearch ? (
+        <View style={styles.search}>
+          <Icon name="search" size={20} color="#000" style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search Here..."
+            value={searchQuery}
+            onChangeText={handleSearch}
+            placeholderTextColor="#ccc"
+          />
+        </View>
+      ) : (
+        <View style={styles.viewContainer}>
+          <Text style={styles.main}>{category} Subcategories</Text>
+          <View style={styles.searchView}>
+            <TouchableOpacity onPress={() => setIsSearch(true)}>
+              <Icon name='search' style={styles.isSearch} />
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
       <Modal
         animationType="fade"
         visible={visible}
@@ -54,6 +65,12 @@ const SubCategory = ({ route }: any) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalText}>Add SubCategory</Text>
+              <TouchableOpacity onPress={() => setVisible(false)}>
+                <Icon name='close-circle-outline' style={styles.modalIcon} />
+              </TouchableOpacity>
+            </View>
             <TextInput
               style={styles.input}
               onChangeText={setName}

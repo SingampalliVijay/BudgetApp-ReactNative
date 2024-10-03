@@ -4,8 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
 import HomeScreen from './src/screens/HomeScreen';
 import store from './src/redux/Store';
-import SubCategoryItemList from './src/styles/SubCategoryItemList';
-import AddItem from './src/screens/AddItem';
+import Toast from 'react-native-toast-message';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,8 +14,8 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="HomeScreen" >
           <Stack.Screen name='HomeScreen' component={HomeScreen} options={{ headerShown: false }} />
-          {/* <Stack.Screen name='HomeScreen' component={AddItem} /> */}
         </Stack.Navigator>
+        <Toast />
       </NavigationContainer>
     </Provider>
   )

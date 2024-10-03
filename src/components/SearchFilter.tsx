@@ -7,6 +7,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const SearchFilter = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -28,7 +29,7 @@ const SearchFilter = () => {
           placeholderTextColor="#ccc"
         />
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setModalVisible(true)} >
             <MaterialIcon name='sort' size={20} color={'black'} onPress={applyFilter} />
           </TouchableOpacity>
         </View>

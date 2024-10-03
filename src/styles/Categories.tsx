@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+    backgroundColor: '#CEDF9F'
   },
   image: {
     flex: 1,
@@ -12,53 +13,59 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
+    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 10,
     paddingHorizontal: 10,
     marginVertical: 10,
-    width: '90%'
-},
-searchIcon: {
+    width: '90%',
+    marginLeft: 20,
+    marginTop: 30
+
+  },
+  searchIcon: {
     marginRight: 10,
-},
-searchInput: {
+  },
+  searchInput: {
     flex: 1,
     height: 40,
     color: '#000',
-},
+  },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     paddingHorizontal: 20,
-    paddingTop: 40,
   },
   main: {
     fontSize: 25,
-    color: 'white',
+    color: '#03346E',
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   list: {
     flex: 1,
     marginTop: 20,
   },
   listItem: {
-    backgroundColor: '#CB80AB',
+    backgroundColor: 'white',
     marginVertical: 8,
-    padding: 10,
+    padding: 20,
     borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
   },
   itemText: {
-    fontSize: 18,
-    color: '#FFF',
-    textAlign:'center'
+    fontSize: 20,
+    color: 'black',
+    textAlign: 'center'
   },
   addButton: {
     position: 'absolute',
     bottom: 30,
-    right:20
+    right: 20
   },
   addIcon: {
-    color:'white',
+    color: '#1E3E62',
     fontSize: 50,
   },
   input: {
@@ -67,8 +74,8 @@ searchInput: {
     padding: 12,
     marginVertical: 10,
     backgroundColor: '#FFF',
-    margin:10,
-    marginBottom:20
+    margin: 10,
+    marginBottom: 15
   },
   centeredView: {
     flex: 1,
@@ -77,10 +84,10 @@ searchInput: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   button: {
-    marginLeft:50,
+    marginLeft: 70,
     borderRadius: 7,
     padding: 10,
-    width:'60%',
+    width: '60%',
     backgroundColor: '#2196F3',
   },
   submit: {
@@ -88,16 +95,61 @@ searchInput: {
     color: 'white',
     textAlign: 'center',
   },
-  modalView:{
-    padding:15,
-    borderRadius:10,
-    borderWidth:1,
-    borderColor:'white',
-    width:'80%',
-    height:170,
-    backgroundColor:'white'
-
-  }
+  modalView: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'white',
+    width: '80%',
+    height: 200,
+    backgroundColor: 'white',
+  },
+  viewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 0,
+    backgroundColor: '#FAF7F0',
+    height:60,
+    borderColor:'gray',
+    borderWidth:0.4
+  },
+  octiIcon:{
+    color:'#03346E',
+    margin:10
+  },
+  modalText: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: '600',
+    marginLeft: 15,
+  },
+  modalIcon: {
+    fontSize: 30,
+    marginLeft: 120
+  },
+  isSearch: {
+    fontSize: 30,
+    paddingLeft: 50,
+    marginLeft: 150,
+    color: '#03346E'
+  },
+  modalContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    marginBottom: 0,
+  },
+  modalinput: {
+    borderRadius: 10,
+    borderWidth: 0.7,
+    padding: 12,
+    backgroundColor: '#FFF',
+    margin: 10,
+    width:'85%',
+    marginLeft:30,
+    marginBottom: 15
+  },
 });
 
 export default styles;

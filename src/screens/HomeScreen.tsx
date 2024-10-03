@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import CategoryStack from '../navigations/CategoryStack';
 import SearchFilter from '../components/SearchFilter';
 import Settings from '../components/Settings';
-import AddItem from './AddItem';
+import ExpenseStack from '../navigations/ExpenseStack';
 const Tab = createBottomTabNavigator();
 
 export default function HomeScreen() {
@@ -24,7 +24,7 @@ export default function HomeScreen() {
           <Icon name="search-outline" color={color} size={size} />
         ),
       }} />
-      <Tab.Screen name="Expenses" component={AddItem} options={{
+      <Tab.Screen name="Expenses" component={ExpenseStack} options={{
         tabBarLabel: 'Expenses',
         tabBarIcon: ({ color, size }) => (
           <Icon name="cart" color={color} size={size} />

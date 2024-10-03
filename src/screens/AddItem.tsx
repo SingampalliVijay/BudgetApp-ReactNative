@@ -1,4 +1,4 @@
-import { Alert, FlatList, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { Dropdown } from 'react-native-element-dropdown';
 import styles from '../styles/AddItem';
@@ -9,27 +9,33 @@ import { useDispatch, useSelector } from 'react-redux';
 import RadioButton from '../components/RadioButton';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { addAmountToSubcategory, addItem } from '../redux/BudgetAction';
-import SearchFilter from '../components/SearchFilter';
+import Toast from 'react-native-toast-message';
 
 const AddItem = () => {
     const [isFocus, setIsFocus] = useState(false);
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const categories = useSelector((state: any) => state.budget.categories);
     const dispatch = useDispatch();
     const [categoryValue, setCategoryValue] = useState('');
     const [subcategoryValue, setSubcategoryValue] = useState('');
     const [amount, setAmount] = useState('');
-    const [isCard, setIsCard] = useState(false)
-    const items = useSelector((state: any) => state.budget.items);
-    console.log('Itemsssss', JSON.stringify(categories))
+    const [categoryName, setCategoryName] = useState('');
+    const [subcategoryName, setSubCategoryName] = useState('');
+    const [notes, setNotes] = useState('');
+    const [paymentMode, setPaymentMode] = useState('');
+    const [categoryVerify, setCategoryVerify] = useState(false);
+    const [subCategoryVerify, setSubCategoryVerify] = useState(false);
+    const [paymentModeVerify, setPaymentModeVerify] = useState(false);
+    const [dateVerify, setDateVerify] = useState(false);
+    const [amountVerify, setAmountVerify] = useState(false);
 
-    let categoryCount = []
+    let categoryCount = [];
     for (var i = 0; i < categories.length; i++) {
         categoryCount.push({
             value: categories[i].id,
             label: categories[i].name
-        })
+        });
     }
 
     let subcategory = [];
@@ -53,137 +59,198 @@ const AddItem = () => {
 
     const handleConfirm = (date: any) => {
         setDate(date.toDateString());
+        setDateVerify(false);
         hideDatePicker();
     };
 
+    const validatingFields = () => {
+        let isValid = true;
+
+        if (!categoryValue) {
+            setCategoryVerify(true);
+            isValid = false;
+        } else {
+            setCategoryVerify(false);
+        }
+
+        if (!subcategoryValue) {
+            setSubCategoryVerify(true);
+            isValid = false;
+        } else {
+            setSubCategoryVerify(false);
+        }
+
+        if (!date) {
+            setDateVerify(true);
+            isValid = false;
+        } else {
+            setDateVerify(false);
+        }
+
+        if (!amount) {
+            setAmountVerify(true);
+            isValid = false;
+        } else {
+            setAmountVerify(false);
+        }
+
+        if (!paymentMode) {
+            setPaymentModeVerify(true);
+            isValid = false;
+        } else {
+            setPaymentModeVerify(false);
+        }
+        return isValid;
+    };
+
     const handleAddItem = () => {
-        setIsCard(false);
-        if (categoryValue && subcategoryValue && amount) {
+        if (validatingFields()) {
             // console.log('Cateogry Value ', categoryValue)
             // console.log('SubCategory Value ', subcategoryValue)
             // console.log('Amount ==== ', amount)
+            // console.log('Payment ==== ', paymentMode)
             const addAmount = parseFloat(amount);
             dispatch(addAmountToSubcategory(categoryValue, subcategoryValue, addAmount));
-            setAmount('');
-        }
 
-        const newItem = {
-            category: categoryValue,
-            subcategory: subcategoryValue,
-            amount: parseFloat(amount),
-            date: date.toString(),
-        };
-        dispatch(addItem(newItem.category, newItem.subcategory, newItem.amount, newItem.date));
-        console.log('Adding Items ', newItem)
+            const newItem = {
+                category: categoryName,
+                subcategory: subcategoryName,
+                amount: addAmount,
+                date: date.toString(),
+                notes: notes,
+                paymentMode: paymentMode,
+            };
+
+            dispatch(addItem(newItem.category, newItem.subcategory, newItem.amount, newItem.date, newItem.notes, newItem.paymentMode));
+
+            Toast.show({
+                type: 'success',
+                text1: 'Item Added Successfully',
+                position: 'bottom'
+            });
+
+            // Reset fields after submission
+            setCategoryValue('');
+            setSubcategoryValue('');
+            setAmount('');
+            setDate('');
+            setPaymentMode('');
+            setNotes('');
+        } else {
+            Toast.show({
+                type: 'error',
+                text1: 'Please fill all the required fields',
+                position: 'bottom'
+            });
+        }
     };
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={isCard ? { opacity: 0.3 } : {}}>
-                <SearchFilter />
-                <Text style={styles.title}>Expenses List</Text>
-            </View>
-            {/* {items.length === 0 ? (
-                <Text>No items added yet</Text>
-            ) : ( */}
-            <FlatList
-                data={items}
-                renderItem={({ item }: any) => (
-                    <View style={styles.itemContainer}>
-                        <Text style={styles.itemText}>Category: {item.category}</Text>
-                        <Text style={styles.itemText}>Subcategory: {item.subcategory}</Text>
-                        <Text style={styles.itemText}>Amount: {item.amount}</Text>
-                        <Text style={styles.itemText}>Date: {item.date}</Text>
-                    </View>
-                )}
-                style={styles.list}
-            />
-            {/* )} */}
-            {isCard && (
-                <View style={[styles.card, styles.overlayCard]}>
-                    <View style={styles.dropdownView}>
-                        <Dropdown
-                            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            data={categoryCount}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder={!isFocus ? 'Select Category' : '...'}
-                            searchPlaceholder="Search..."
-                            value={categoryValue}
-                            onFocus={() => setIsFocus(true)}
-                            onBlur={() => setIsFocus(false)}
-                            onChange={item => {
-                                setCategoryValue(item.value);
-                                setIsFocus(false);
-                            }}
-                        />
-                        <Dropdown
-                            style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            data={subcategory}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder={!isFocus ? 'Select SubCategory' : '...'}
-                            searchPlaceholder="Search..."
-                            value={subcategoryValue}
-                            onFocus={() => setIsFocus(true)}
-                            onBlur={() => setIsFocus(false)}
-                            onChange={item => {
-                                setSubcategoryValue(item.value);
-                                setIsFocus(false);
-                            }}
-                        />
-                    </View>
-                    <Text style={styles.date}>Date of Issue</Text>
-                    <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
+            <View style={[styles.card, styles.overlayCard]}>
+                <View style={styles.dropdownView}>
+                    <Dropdown
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        data={categoryCount}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Select Category' : '...'}
+                        searchPlaceholder="Search..."
+                        value={categoryValue}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                            setCategoryValue(item.value);
+                            setCategoryName(item.label);
+                            setIsFocus(false);
+                        }}
                     />
-                    <View style={styles.dateOfBirthContainer}>
-                        <TextInput
-                            style={[styles.dob, { flex: 1 }]}
-                            placeholder='YYYY/MM/DD'
-                            editable={false}
-                            value={date} />
-                        <TouchableOpacity onPress={showDatePicker} >
-                            <Icon name='calendar-outline' style={styles.icon} />
-                        </TouchableOpacity>
-                    </View>
-                    <Text style={styles.amount}>Amount</Text>
-                    <View style={styles.dateOfBirthContainer}>
-                        <MaterialIcon name='currency-rupee' style={styles.icon} />
-                        <TextInput placeholder='Enter the Amount' value={amount} onChangeText={setAmount} />
-                    </View>
-                    <Text style={styles.payment}>Payment Mode</Text>
-                    <View style={styles.radioButton}>
-                        <RadioButton />
-                    </View>
-                    <Text> Notes </Text>
-                    <View style={styles.notes}>
-                        <TextInput multiline placeholder='Enter Details if Needed' style={styles.notesText} />
-                    </View>
-                    <Pressable
-                        style={styles.button} onPress={handleAddItem} >
-                        <Text style={styles.submit}>Add</Text>
-                    </Pressable>
+                    {categoryVerify && <Text style={styles.error}>Select Category</Text>}
+
+                    <Dropdown
+                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        data={subcategory}
+                        search
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        placeholder={!isFocus ? 'Select SubCategory' : '...'}
+                        searchPlaceholder="Search..."
+                        value={subcategoryValue}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        onChange={item => {
+                            setSubcategoryValue(item.value);
+                            setSubCategoryName(item.label);
+                            setIsFocus(false);
+                        }}
+                    />
+                    {subCategoryVerify && <Text style={styles.error}>Select SubCategory</Text>}
                 </View>
-            )}
-            <TouchableOpacity onPress={() => setIsCard(true)} style={styles.addButton}>
-                <Icon name="add-circle-outline" style={[styles.addIcon, { opacity: isCard ? 0.3 : 1 }]} />
-            </TouchableOpacity>
+
+                <Text style={styles.date}>Date of Issue</Text>
+                <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={handleConfirm}
+                    onCancel={hideDatePicker}
+                />
+                <View style={styles.dateOfBirthContainer}>
+                    <TextInput
+                        style={[styles.dob, { flex: 1 }]}
+                        placeholder='YYYY/MM/DD'
+                        editable={false}
+                        value={date}
+                    />
+                    <TouchableOpacity onPress={showDatePicker}>
+                        <Icon name='calendar-outline' style={styles.icon} />
+                    </TouchableOpacity>
+                </View>
+                {dateVerify && <Text style={styles.error}>Select Date</Text>}
+
+                <Text style={styles.amount}>Amount</Text>
+                <View style={styles.dateOfBirthContainer}>
+                    <MaterialIcon name='currency-rupee' style={styles.icon} />
+                    <TextInput
+                        placeholder='Enter the Amount'
+                        value={amount}
+                        onChangeText={setAmount}
+                        keyboardType='numeric'
+                    />
+                </View>
+                {amountVerify && <Text style={styles.error}>Enter Amount</Text>}
+
+                <Text style={styles.payment}>Payment Mode</Text>
+                <View style={styles.radioButton}>
+                    <RadioButton setPaymentMode={setPaymentMode} />
+                </View>
+                {paymentModeVerify && <Text style={styles.error}>Select Payment Mode</Text>}
+
+                <Text style={styles.notesField}>Notes</Text>
+                <View style={styles.notes}>
+                    <TextInput
+                        multiline
+                        placeholder='Enter Details if Needed'
+                        style={styles.notesText}
+                        value={notes}
+                        onChangeText={setNotes}
+                    />
+                </View>
+
+                <Pressable style={styles.button} onPress={handleAddItem}>
+                    <Text style={styles.submit}>Add</Text>
+                </Pressable>
+            </View>
         </SafeAreaView>
     )
 }
 
-export default AddItem
+export default AddItem;

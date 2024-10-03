@@ -13,22 +13,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     width: '90%',
-    marginLeft:20
-},
-searchIcon: {
-    marginRight: 10,
-},
-searchInput: {
+    marginLeft: 20
+  },
+  searchIcon: {
+    // marginRight: 10,
+  },
+  searchInput: {
     flex: 1,
     height: 40,
     color: '#000',
-},
+  },
   main: {
-    // marginTop: 30,
-    fontSize: 25,
+    fontSize: 20,
     color: '#4F75FF',
     fontWeight: '900',
     textAlign: 'center',
+    paddingLeft: 20
   },
   list: {
     flex: 1,
@@ -39,14 +39,14 @@ searchInput: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    backgroundColor: '#FFE5CF',
+    backgroundColor: 'white',
     marginVertical: 6,
     padding: 10,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
-    shadowRadius: 3.84,
+    shadowRadius: 4,
     elevation: 3,
   },
   itemText: {
@@ -96,7 +96,7 @@ searchInput: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   button: {
-    marginLeft: 50,
+    marginLeft: 70,
     borderRadius: 7,
     padding: 10,
     width: '60%',
@@ -109,13 +109,48 @@ searchInput: {
     textAlign: 'center',
   },
   modalView: {
-    padding: 15,
+    padding: 5,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'white',
     width: '80%',
-    height: 170,
-    backgroundColor: 'white'
+    height: 220,
+    backgroundColor: 'white',
+  },
+  viewContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    height: 60,
+    borderColor: 'gray',
+    borderWidth: 0.4,
+    padding: 10,
+    width: '100%'
+  },
+  modalContainer: {
+    flexDirection: 'row',
+    margin: 10
+  },
+  modalText: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: '600',
+    marginLeft: 10,
+  },
+  modalIcon: {
+    fontSize: 30,
+    marginLeft: 80,
+    color: 'black'
+  },
+  isSearch: {
+    fontSize: 30,
+    marginLeft: 50,
+    paddingTop: 5,
+    color: 'black'
+  },
+  searchView: {
+    position: 'absolute',
+    right: 20,
+    paddingTop: 8
   }
 });
 

@@ -31,12 +31,14 @@ export const addAmountToSubcategory = (categoryId: string, subcategoryId: string
   }
 });
 
-export const addItem = (categoryId: string, subcategoryId: string, amount: number , date : string) => ({
+export const addItem = (categoryId: string, subcategoryId: string, amount: number, date: string, notes: string, paymentMode: string) => ({
   type: ADD_ITEM,
-  data:{
+  data: {
     categoryId,
     subcategoryId,
     amount,
-    date
+    date,
+    notes,
+    paymentMode
   }
 });

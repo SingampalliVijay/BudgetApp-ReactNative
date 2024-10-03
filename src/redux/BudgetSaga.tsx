@@ -17,8 +17,6 @@ function* subcategoryList(action: any) {
     });
 }
 
-
-
 function* budgetSaga() {
     yield takeEvery(ADD_CATEGORY, categoryList)
     yield takeEvery(ADD_SUBCATEGORY, subcategoryList);
