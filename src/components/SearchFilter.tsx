@@ -1,10 +1,9 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/Search';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Dropdown } from 'react-native-element-dropdown';
 
 const SearchFilter = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -12,6 +11,10 @@ const SearchFilter = () => {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
+
+  const applyFilter = () => {
+    Alert.alert('Apply Filter')
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -25,7 +28,9 @@ const SearchFilter = () => {
           placeholderTextColor="#ccc"
         />
         <View>
-          <MaterialIcon name='sort' size={20} color={'black'}/>
+          <TouchableOpacity>
+            <MaterialIcon name='sort' size={20} color={'black'} onPress={applyFilter} />
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

@@ -8,6 +8,23 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  search: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    width: '90%'
+},
+searchIcon: {
+    marginRight: 10,
+},
+searchInput: {
+    flex: 1,
+    height: 40,
+    color: '#000',
+},
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',

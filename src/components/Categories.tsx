@@ -1,5 +1,5 @@
-import { FlatList, ImageBackground, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useId, useState } from 'react'
+import { FlatList, ImageBackground, Keyboard, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, {useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,9 +9,17 @@ import styles from '../styles/Categories'
 const Categories = ({ navigation }: any) => {
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const categories = useSelector((state: any) => state.budget.categories);
   const dispatch = useDispatch();
   const id = categories.length ? Math.max(...categories.map((cat: any) => cat.id)) + 1 : 1;
+
+  const searchCategory = categories.filter((cat: any) =>
+    cat.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   // console.log('categories --->', categories)
   console.log('Categories ---> ', JSON.stringify(categories))
@@ -26,9 +34,24 @@ const Categories = ({ navigation }: any) => {
     navigation.navigate('SubCategory', { category: cat.name });
   };
 
+  const handleScreenTouch = () => {
+    setSearchQuery('');
+    Keyboard.dismiss();
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ImageBackground source={require('../assets/budget.jpg')} resizeMode="cover" style={styles.image}>
+        <View style={styles.search}>
+          <Icon name="search" size={20} color="#000" style={styles.searchIcon} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search Here..."
+            value={searchQuery}
+            onChangeText={handleSearch}
+            placeholderTextColor="#ccc"
+          />
+        </View>
         <View style={styles.overlay}>
           <Text style={styles.main}>Categories</Text>
           <Modal
@@ -55,7 +78,7 @@ const Categories = ({ navigation }: any) => {
           </Modal>
           <View style={{ flex: 1 }}>
             <FlatList
-              data={categories}
+              data={searchCategory}
               style={styles.list}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => handleCategory(item)}>

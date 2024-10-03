@@ -1,7 +1,8 @@
-import { ADD_AMOUNT_TO_SUBCATEGORY, SET_CATEGORIES_DATA, SET_SUBCATEGORIES_DATA } from "./BudgetAction";
+import { ADD_AMOUNT_TO_SUBCATEGORY, ADD_ITEM, SET_CATEGORIES_DATA, SET_SUBCATEGORIES_DATA } from "./BudgetAction";
 
 const initialState: any = {
   categories: [],
+  items: [],
 };
 
 export const budgetReducer = (state = initialState, action: any) => {
@@ -36,23 +37,29 @@ export const budgetReducer = (state = initialState, action: any) => {
             : cat
         ),
       };
-      case ADD_AMOUNT_TO_SUBCATEGORY:
-              // console.log('Action   ---->', action)
-        return {
-          ...state,
-          categories: state.categories.map((category: any) =>
-            category.id === action.data.categoryId
-              ? {
-                ...category,
-                subcategories: category.subcategories.map((subcategory: any) =>
-                  subcategory.id === action.data.subcategoryId
-                    ? {
-                      ...subcategory,
-                      amount: subcategory.amount + action.data.amount
-                    } : subcategory)
-              } : category
-          )
-        }
+    case ADD_AMOUNT_TO_SUBCATEGORY:
+      // console.log('Action   ---->', action)
+      return {
+        ...state,
+        categories: state.categories.map((category: any) =>
+          category.id === action.data.categoryId
+            ? {
+              ...category,
+              subcategories: category.subcategories.map((subcategory: any) =>
+                subcategory.id === action.data.subcategoryId
+                  ? {
+                    ...subcategory,
+                    amount: subcategory.amount + action.data.amount
+                  } : subcategory)
+            } : category
+        )
+      }
+    case ADD_ITEM:
+      console.log('Action   ---->', action)
+      return {
+        ...state,
+        items: [...state.items, action.data],
+      };
     default:
       return state;
   }

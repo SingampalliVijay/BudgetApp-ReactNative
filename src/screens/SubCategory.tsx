@@ -7,16 +7,23 @@ import { addSubcategory } from '../redux/BudgetAction';
 import styles from '../styles/SubCategory';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 
-const SubCategory = ({ route}: any) => {
+const SubCategory = ({ route }: any) => {
   const { category } = route.params;
   const categories = useSelector((state: any) => state.budget.categories);
   const selectedCategory = categories.find((cat: any) => cat.name === category);
   const subcategory = selectedCategory ? selectedCategory.subcategories : [];
   const dispatch = useDispatch();
   const [name, setName] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [visible, setVisible] = useState(false);
-
   const id = subcategory.length ? Math.max(...subcategory.map((sub: any) => sub.id)) + 1 : 1;
+
+  const searchSubcategory = subcategory.filter((cat: any) =>
+    cat.name.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   console.log('Subcategories list --->', subcategory);
 
@@ -28,6 +35,16 @@ const SubCategory = ({ route}: any) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <View style={styles.search}>
+        <Icon name="search" size={20} color="#000" style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search Here..."
+          value={searchQuery}
+          onChangeText={handleSearch}
+          placeholderTextColor="#ccc"
+        />
+      </View>
       <Text style={styles.main}>{category} Subcategories</Text>
       <Modal
         animationType="fade"
@@ -51,15 +68,15 @@ const SubCategory = ({ route}: any) => {
       </Modal>
       <View style={{ flex: 1 }}>
         <FlatList
-          data={subcategory}
+          data={searchSubcategory}
           style={styles.list}
           renderItem={({ item }) => (
             <View style={[styles.listItem]}>
-                <Text style={styles.itemText}>{item.name}</Text>
-                <View style={styles.amount}>
+              <Text style={styles.itemText}>{item.name}</Text>
+              <View style={styles.amount}>
                 <MaterialIcon name='currency-rupee' style={styles.icon} />
                 <Text style={styles.amountText}>{item.amount}</Text>
-                </View>
+              </View>
             </View>
           )}
         />

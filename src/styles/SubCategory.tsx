@@ -5,8 +5,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E5D9F2'
   },
+  search: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginVertical: 10,
+    width: '90%',
+    marginLeft:20
+},
+searchIcon: {
+    marginRight: 10,
+},
+searchInput: {
+    flex: 1,
+    height: 40,
+    color: '#000',
+},
   main: {
-    marginTop: 30,
+    // marginTop: 30,
     fontSize: 25,
     color: '#4F75FF',
     fontWeight: '900',

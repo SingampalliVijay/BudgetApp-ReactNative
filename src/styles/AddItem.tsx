@@ -12,6 +12,26 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 10
     },
+    list: {
+        // flex: 1,
+        marginBottom: 20,
+    },
+    itemContainer: {
+        backgroundColor: '#fff',
+        borderRadius: 8,
+        padding: 16,
+        marginVertical: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    itemText: {
+        fontSize: 16,
+        color: '#333',
+        marginBottom: 8,
+    },
     card: {
         borderWidth: 1,
         borderColor: 'gray',
@@ -23,6 +43,15 @@ const styles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 3,
         backgroundColor: 'white'
+    },
+    overlayCard: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 40,
+        margin: 10,
+        backgroundColor: 'white',
+        zIndex: 10,
     },
     dropdownView: {
         padding: 10
