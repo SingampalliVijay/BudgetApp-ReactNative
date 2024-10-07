@@ -5,39 +5,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#CEDF9F'
   },
-  image: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  search: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-    width: '90%',
-    marginLeft: 20,
-    marginTop: 30
-
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-    color: '#000',
-  },
   overlay: {
     flex: 1,
     paddingHorizontal: 20,
-  },
-  main: {
-    fontSize: 25,
-    color: '#03346E',
-    fontWeight: 'bold',
   },
   list: {
     flex: 1,
@@ -71,11 +41,11 @@ const styles = StyleSheet.create({
   input: {
     borderRadius: 10,
     borderWidth: 0.7,
-    padding: 12,
     marginVertical: 10,
     backgroundColor: '#FFF',
-    margin: 10,
-    marginBottom: 15
+    margin: 20,
+    marginBottom: 15,
+    paddingLeft: 10
   },
   centeredView: {
     flex: 1,
@@ -100,55 +70,76 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     width: '80%',
-    height: 200,
+    height: 220,
     backgroundColor: 'white',
-  },
-  viewContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 0,
-    backgroundColor: '#FAF7F0',
-    height:60,
-    borderColor:'gray',
-    borderWidth:0.4
-  },
-  octiIcon:{
-    color:'#03346E',
-    margin:10
   },
   modalText: {
     fontSize: 20,
     color: 'black',
     fontWeight: '600',
-    marginLeft: 15,
   },
   modalIcon: {
     fontSize: 30,
-    marginLeft: 120
-  },
-  isSearch: {
-    fontSize: 30,
-    paddingLeft: 50,
-    marginLeft: 150,
-    color: '#03346E'
+    marginLeft: 120,
+    color: 'black'
   },
   modalContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20,
-    marginBottom: 0,
+    marginBottom: 10,
+    backgroundColor: '#FAF7F0',
+    height: 60,
+    borderColor: 'gray',
+    borderWidth: 0.4,
+    width: '100%',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
-  modalinput: {
-    borderRadius: 10,
-    borderWidth: 0.7,
-    padding: 12,
-    backgroundColor: '#FFF',
-    margin: 10,
-    width:'85%',
-    marginLeft:30,
-    marginBottom: 15
+  toolbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 15,
+    backgroundColor: '#f0f0f0',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  main: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color:'black',
+    marginLeft: 8,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginRight: 10,
+  },
+  searchButton: {
+    padding: 5,
+  },
+  searchIcon: {
+    color: '#333',
+  },
+  closeIcon: {
+    marginLeft: 10,
+  },
+  octiIcon: {
+    marginRight: 8,
   },
 });
 

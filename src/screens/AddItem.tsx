@@ -16,6 +16,7 @@ const AddItem = () => {
     const [date, setDate] = useState('');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const categories = useSelector((state: any) => state.budget.categories);
+    const items = useSelector((state: any) => state.budget.items);
     const dispatch = useDispatch();
     const [categoryValue, setCategoryValue] = useState('');
     const [subcategoryValue, setSubcategoryValue] = useState('');
@@ -29,6 +30,9 @@ const AddItem = () => {
     const [paymentModeVerify, setPaymentModeVerify] = useState(false);
     const [dateVerify, setDateVerify] = useState(false);
     const [amountVerify, setAmountVerify] = useState(false);
+
+    const newid = items.length ? Math.max(...items.map((sub: any) => sub.id)) + 1 : 1;
+
 
     let categoryCount = [];
     for (var i = 0; i < categories.length; i++) {
@@ -109,10 +113,12 @@ const AddItem = () => {
             // console.log('SubCategory Value ', subcategoryValue)
             // console.log('Amount ==== ', amount)
             // console.log('Payment ==== ', paymentMode)
+
             const addAmount = parseFloat(amount);
             dispatch(addAmountToSubcategory(categoryValue, subcategoryValue, addAmount));
 
             const newItem = {
+                id: newid,
                 category: categoryName,
                 subcategory: subcategoryName,
                 amount: addAmount,
@@ -121,15 +127,13 @@ const AddItem = () => {
                 paymentMode: paymentMode,
             };
 
-            dispatch(addItem(newItem.category, newItem.subcategory, newItem.amount, newItem.date, newItem.notes, newItem.paymentMode));
+            dispatch(addItem(newItem.id, newItem.category, newItem.subcategory, newItem.amount, newItem.date, newItem.notes, newItem.paymentMode));
 
             Toast.show({
                 type: 'success',
                 text1: 'Item Added Successfully',
                 position: 'bottom'
             });
-
-            // Reset fields after submission
             setCategoryValue('');
             setSubcategoryValue('');
             setAmount('');

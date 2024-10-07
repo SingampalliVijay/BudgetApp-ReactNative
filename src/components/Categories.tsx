@@ -11,7 +11,7 @@ const Categories = ({ navigation }: any) => {
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSearch, setIsSearch] = useState(false)
+  const [isSearch, setIsSearch] = useState(false);
   const categories = useSelector((state: any) => state.budget.categories);
   const dispatch = useDispatch();
   const id = categories.length ? Math.max(...categories.map((cat: any) => cat.id)) + 1 : 1;
@@ -40,27 +40,27 @@ const Categories = ({ navigation }: any) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {/* <ImageBackground source={require('../assets/budget.jpg')} resizeMode="cover" style={styles.image}> */}
-      {isSearch ? (
-        <View style={styles.search}>
-          <Icon name="search" size={20} color="#000" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search Here..."
-            value={searchQuery}
-            onChangeText={handleSearch}
-            placeholderTextColor="#ccc"
-          />
-        </View>
-      ) : (
-        <View style={styles.viewContainer}>
-          <OctiIcon name='file-directory' size={20} style={styles.octiIcon} />
-          <Text style={styles.main}>Categories</Text>
-          <TouchableOpacity onPress={() => setIsSearch(true)}>
-            <Icon name='search' style={styles.isSearch} />
-          </TouchableOpacity>
-        </View>
-      )}
+      <View style={styles.toolbar}>
+        {isSearch ? (
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search Here..."
+              value={searchQuery}
+              onChangeText={handleSearch}
+              placeholderTextColor="#ccc"
+            />
+          </View>
+        ) : (
+          <View style={styles.titleContainer}>
+            <OctiIcon name='file-directory' size={20} style={styles.octiIcon} />
+            <Text style={styles.main}>Categories</Text>
+          </View>
+        )}
+        <TouchableOpacity onPress={() => setIsSearch(!isSearch)} style={styles.searchButton}>
+          <Icon name='search' size={20} style={styles.searchIcon} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.overlay}>
         <Modal
           animationType="fade"
@@ -97,7 +97,6 @@ const Categories = ({ navigation }: any) => {
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => handleCategory(item)}>
                 <View style={styles.listItem}>
-                  {/* <Text style={styles.itemText}>{item.id}</Text> */}
                   <Text style={styles.itemText}>{item.name}</Text>
                 </View>
               </TouchableOpacity>
@@ -108,8 +107,7 @@ const Categories = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
       </View>
-      {/* </ImageBackground> */}
-    </SafeAreaView>
+    </SafeAreaView >
   );
 };
 

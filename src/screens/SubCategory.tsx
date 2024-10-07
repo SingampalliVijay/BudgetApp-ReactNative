@@ -36,27 +36,26 @@ const SubCategory = ({ route }: any) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {isSearch ? (
-        <View style={styles.search}>
-          <Icon name="search" size={20} color="#000" style={styles.searchIcon} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search Here..."
-            value={searchQuery}
-            onChangeText={handleSearch}
-            placeholderTextColor="#ccc"
-          />
-        </View>
-      ) : (
-        <View style={styles.viewContainer}>
-          <Text style={styles.main}>{category} Subcategories</Text>
-          <View style={styles.searchView}>
-            <TouchableOpacity onPress={() => setIsSearch(true)}>
-              <Icon name='search' style={styles.isSearch} />
-            </TouchableOpacity>
+      <View style={styles.toolbar}>
+        {isSearch ? (
+          <View style={styles.searchContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search Here..."
+              value={searchQuery}
+              onChangeText={handleSearch}
+              placeholderTextColor="#ccc"
+            />
           </View>
-        </View>
-      )}
+        ) : (
+          <View style={styles.titleContainer}>
+            <Text style={styles.main}>{category} Subcategories</Text>
+          </View>
+        )}
+        <TouchableOpacity onPress={() => setIsSearch(!isSearch)} style={styles.searchButton}>
+          <Icon name='search' size={20} style={styles.searchIcon} />
+        </TouchableOpacity>
+      </View>
       <Modal
         animationType="fade"
         visible={visible}
@@ -90,10 +89,12 @@ const SubCategory = ({ route }: any) => {
           renderItem={({ item }) => (
             <View style={[styles.listItem]}>
               <Text style={styles.itemText}>{item.name}</Text>
-              <View style={styles.amount}>
-                <MaterialIcon name='currency-rupee' style={styles.icon} />
-                <Text style={styles.amountText}>{item.amount}</Text>
-              </View>
+              {item.amount > 0 && (
+                <View style={styles.amount}>
+                  <MaterialIcon name='currency-rupee' style={styles.icon} />
+                  <Text style={styles.amountText}>{item.amount}</Text>
+                </View>
+              )}
             </View>
           )}
         />

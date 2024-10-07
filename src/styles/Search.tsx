@@ -57,6 +57,26 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
     },
+    modalView:{
+
+    },
+    modalOption:{
+
+
+    },
+    modalText:{
+
+    },
+    closeButton:{
+
+    },
+    closeIcon:{
+
+    },
+    overlay: {
+        // flex: 1,
+        paddingHorizontal: 20,
+      },
 });
 
 export default styles;

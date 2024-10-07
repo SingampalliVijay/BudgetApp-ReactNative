@@ -4,6 +4,8 @@ export const ADD_SUBCATEGORY = "add_subcategory";
 export const SET_SUBCATEGORIES_DATA = "set_subcategories_data";
 export const ADD_AMOUNT_TO_SUBCATEGORY = "add_amount_to_subcategory";
 export const ADD_ITEM = "add_item";
+export const UPDATE_ITEM ='update_item'
+export const DELETE_ITEM='delete_item'
 
 export const addCategory = (id: number, category: string) => ({
   type: ADD_CATEGORY,
@@ -31,9 +33,10 @@ export const addAmountToSubcategory = (categoryId: string, subcategoryId: string
   }
 });
 
-export const addItem = (categoryId: string, subcategoryId: string, amount: number, date: string, notes: string, paymentMode: string) => ({
+export const addItem = (id: number, categoryId: string, subcategoryId: string, amount: number, date: string, notes: string, paymentMode: string) => ({
   type: ADD_ITEM,
   data: {
+    id,
     categoryId,
     subcategoryId,
     amount,
@@ -42,3 +45,16 @@ export const addItem = (categoryId: string, subcategoryId: string, amount: numbe
     paymentMode
   }
 });
+
+export const updateItem = (updatedItem: any) => ({
+  type:UPDATE_ITEM,
+  data: updatedItem,
+});
+
+
+export const deleteItem = (id: number) => {
+  return {
+    type: DELETE_ITEM,
+    data: id,
+  };
+};
