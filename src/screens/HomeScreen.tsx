@@ -5,6 +5,7 @@ import CategoryStack from '../navigations/CategoryStack';
 import SearchFilter from '../components/SearchFilter';
 import Settings from '../components/Settings';
 import ExpenseStack from '../navigations/ExpenseStack';
+import FontAwesome from 'react-native-vector-icons/FontAwesome6'
 const Tab = createBottomTabNavigator();
 
 export default function HomeScreen() {
@@ -27,7 +28,7 @@ export default function HomeScreen() {
       <Tab.Screen name="Expenses" component={ExpenseStack} options={{
         tabBarLabel: 'Expenses',
         tabBarIcon: ({ color, size }) => (
-          <Icon name="cart" color={color} size={size} />
+          <FontAwesome name="sack-dollar" color={color} size={size} />
         ),
       }} />
       <Tab.Screen name="Settings" component={Settings} options={{

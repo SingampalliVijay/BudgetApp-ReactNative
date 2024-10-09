@@ -1,21 +1,31 @@
 import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleWare from 'redux-saga';
+import createSagaMiddleware from 'redux-saga';
 import budgetSaga from './BudgetSaga';
 import { budgetReducer } from './BudgetReducer';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from '@react-native-async-storage/async-storage';
 
+const persistConfig = {
+    key: 'root',
+    storage,
+};
+const persistedReducer = persistReducer(persistConfig, budgetReducer);
 
-const sagaMiddleWare = createSagaMiddleWare();
+const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
     reducer: {
-        budget: budgetReducer,
+        budget: persistedReducer,
     },
-    middleware:(gDM)=>gDM({
-        serializableCheck:false,
-        immutableCheck:false,
-        thunk:false
-    }).concat(sagaMiddleWare)
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+            immutableCheck: false,
+            thunk: false,
+        }).concat(sagaMiddleware),
 });
 
-sagaMiddleWare.run(budgetSaga);
-export default store;
+const persistor = persistStore(store);
+sagaMiddleware.run(budgetSaga);
+export { store, persistor };
+
 

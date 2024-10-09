@@ -17,6 +17,7 @@ const SubCategory = ({ route }: any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [visible, setVisible] = useState(false);
   const [isSearch, setIsSearch] = useState(false)
+  const [isFocused, setIsFocused] = useState(false);
   const id = subcategory.length ? Math.max(...subcategory.map((sub: any) => sub.id)) + 1 : 1;
 
   const searchSubcategory = subcategory.filter((cat: any) =>
@@ -45,14 +46,21 @@ const SubCategory = ({ route }: any) => {
               value={searchQuery}
               onChangeText={handleSearch}
               placeholderTextColor="#ccc"
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
             />
+             {isFocused && (
+              <TouchableOpacity onPress={() => { setIsSearch(false); setSearchQuery(''); }}>
+                <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
+              </TouchableOpacity>
+            )}
           </View>
         ) : (
           <View style={styles.titleContainer}>
             <Text style={styles.main}>{category} Subcategories</Text>
           </View>
         )}
-        <TouchableOpacity onPress={() => setIsSearch(!isSearch)} style={styles.searchButton}>
+        <TouchableOpacity onPress={() => setIsSearch(true)} style={styles.searchButton}>
           <Icon name='search' size={20} style={styles.searchIcon} />
         </TouchableOpacity>
       </View>

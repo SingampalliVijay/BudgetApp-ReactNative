@@ -42,11 +42,11 @@ export const budgetReducer = (state = initialState, action: any) => {
       return {
         ...state,
         categories: state.categories.map((category: any) =>
-          category.id === action.data.categoryId
+          category.id === action.data.category
             ? {
               ...category,
               subcategories: category.subcategories.map((subcategory: any) =>
-                subcategory.id === action.data.subcategoryId
+                subcategory.id === action.data.subcategory
                   ? {
                     ...subcategory,
                     amount: subcategory.amount + action.data.amount
@@ -55,21 +55,23 @@ export const budgetReducer = (state = initialState, action: any) => {
         )
       }
     case ADD_ITEM:
-      console.log('Action   ---->', action)
+      // console.log('Action   ---->', action)
       return {
         ...state,
         items: [...state.items, action.data],
       };
     case DELETE_ITEM:
+      // console.log('Action   ---->', action)
       return {
         ...state,
         items: state.items.filter((item: any) => item.id !== action.data),
       };
     case UPDATE_ITEM:
+      console.log('Action   ---->', action)
       return {
         ...state,
         items: state.items.map((item: any) =>
-          item.id === action.payload.id ? action.data : item
+          item.id === action.data.id ? action.data : item
         )
       }
     default:

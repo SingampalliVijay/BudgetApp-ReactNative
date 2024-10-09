@@ -112,20 +112,20 @@ const styles = StyleSheet.create({
   main: {
     fontSize: 20,
     fontWeight: 'bold',
-    color:'black',
+    color: 'black',
     marginLeft: 8,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth:0.6,
+    borderRadius:6,
     flex: 1,
   },
   searchInput: {
     flex: 1,
     height: 40,
     borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
     paddingHorizontal: 10,
     marginRight: 10,
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   closeIcon: {
-    marginLeft: 10,
+    marginRight: 5,
   },
   octiIcon: {
     marginRight: 8,

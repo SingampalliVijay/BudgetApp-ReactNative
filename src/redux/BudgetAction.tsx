@@ -24,21 +24,22 @@ export const addSubcategory = (id: number, subcategory: string, category: string
   }
 });
 
-export const addAmountToSubcategory = (categoryId: string, subcategoryId: string, amount: number) => ({
+export const addAmountToSubcategory = (category: string, subcategory: string, amount: number) => ({
   type: ADD_AMOUNT_TO_SUBCATEGORY,
   data: {
-    categoryId,
-    subcategoryId,
+    category,
+    subcategory,
     amount,
   }
 });
 
-export const addItem = (id: number, categoryId: string, subcategoryId: string, amount: number, date: string, notes: string, paymentMode: string) => ({
+export const addItem = (id: number, category: string, subcategory: string, amount: number,
+   date: string, notes: string, paymentMode: string) => ({
   type: ADD_ITEM,
   data: {
     id,
-    categoryId,
-    subcategoryId,
+    category,
+    subcategory,
     amount,
     date,
     notes,

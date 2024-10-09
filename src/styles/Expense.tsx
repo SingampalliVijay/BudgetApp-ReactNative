@@ -68,27 +68,33 @@ const styles = StyleSheet.create({
         fontSize: 50,
     },
     editIconContainer: {
-        position: 'absolute',  
-        top: 20,              
-        right: 20,           
+        position: 'absolute',
+        top: 20,
+        right: 20,
     },
     deleteIconContainer: {
-        position: 'absolute',  
-        top: 70,              
-        right: 20,           
+        position: 'absolute',
+        top: 30,
+        right: 20,
+    },
+    deleteIcon: {
+        color: '#dc3545', // Red color for delete icon
+    },
+    itemDetailsContainer: {
+        flex: 1,
+        paddingRight: 50, // Space for delete icon
     },
     editIcon: {
         color: '#000',
-        marginBottom:10         
+        marginBottom: 10
     },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-      },
-      // Modal View Box
-      modalView: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalView: {
         width: '90%',
         backgroundColor: 'white',
         borderRadius: 10,
@@ -96,22 +102,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-      },
-      // Modal Title
-      modalTitle: {
+    },
+    modalTitle: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 20,
         color: '#333',
-      },
-      // Input Fields
-      input: {
+    },
+    input: {
         width: '100%',
         height: 40,
         borderColor: '#ccc',
@@ -119,20 +123,19 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         marginBottom: 15,
-      },
-      // Save Button
-      saveButton: {
+    },
+    saveButton: {
         width: '100%',
         backgroundColor: '#2196F3',
         padding: 10,
         borderRadius: 5,
         alignItems: 'center',
-      },
-      saveButtonText: {
+    },
+    saveButtonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
-      },
+    },
 
 })
 

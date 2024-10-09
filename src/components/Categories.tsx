@@ -12,6 +12,7 @@ const Categories = ({ navigation }: any) => {
   const [visible, setVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearch, setIsSearch] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
   const categories = useSelector((state: any) => state.budget.categories);
   const dispatch = useDispatch();
   const id = categories.length ? Math.max(...categories.map((cat: any) => cat.id)) + 1 : 1;
@@ -49,7 +50,14 @@ const Categories = ({ navigation }: any) => {
               value={searchQuery}
               onChangeText={handleSearch}
               placeholderTextColor="#ccc"
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
             />
+            {isFocused && (
+              <TouchableOpacity onPress={() => { setIsSearch(false); setSearchQuery(''); }}>
+                <Icon name="close" size={20} color="#000" style={styles.closeIcon} />
+              </TouchableOpacity>
+            )}
           </View>
         ) : (
           <View style={styles.titleContainer}>
@@ -57,7 +65,7 @@ const Categories = ({ navigation }: any) => {
             <Text style={styles.main}>Categories</Text>
           </View>
         )}
-        <TouchableOpacity onPress={() => setIsSearch(!isSearch)} style={styles.searchButton}>
+        <TouchableOpacity onPress={() => setIsSearch(true)} style={styles.searchButton}>
           <Icon name='search' size={20} style={styles.searchIcon} />
         </TouchableOpacity>
       </View>

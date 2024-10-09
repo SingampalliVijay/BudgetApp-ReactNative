@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth:0.6,
+    borderRadius:7,
     flex: 1,
   },
   searchInput: {
     flex: 1,
     height: 40,
     borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
     paddingHorizontal: 10,
     marginRight: 10,
   },
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   closeIcon: {
-    marginLeft: 10,
+    marginRight: 10,
   },
   octiIcon: {
     marginRight: 8,

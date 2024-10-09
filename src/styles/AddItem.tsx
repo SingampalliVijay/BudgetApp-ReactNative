@@ -6,27 +6,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#EDDFE0'
     },
     card: {
-        borderWidth: 1,
-        borderColor: 'gray',
-        padding: 10,
-        margin: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 3.84,
-        elevation: 3,
-        backgroundColor: 'white'
-    },
-    overlayCard: {
         position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 40,
-        margin: 10,
         backgroundColor: 'white',
-        zIndex: 10,
+        width: '100%',
+        height: '100%'
     },
     dropdownView: {
+        marginTop: 30,
         padding: 10
     },
     dropdown: {
@@ -78,20 +64,21 @@ const styles = StyleSheet.create({
         marginLeft: 20
     },
     radioButton: {
-        alignItems: 'center',
+        flexDirection: 'row',
         borderWidth: 1,
         borderRadius: 10,
         margin: 10,
         width: '89%',
         marginLeft: 20,
-        padding: 8,
-        borderColor: 'gray'
-
+        padding: 10,
+        paddingLeft: 17,
+        borderColor: 'gray',
     },
     payment: {
         fontSize: 15,
         color: 'black',
-        marginLeft: 20
+        paddingTop: 6,
+        paddingRight: 10
     },
     notes: {
         borderWidth: 1,
@@ -105,7 +92,7 @@ const styles = StyleSheet.create({
     notesText: {
         padding: 10,
     },
-    notesField:{
+    notesField: {
         fontSize: 15,
         color: 'black',
         marginLeft: 20
@@ -127,7 +114,64 @@ const styles = StyleSheet.create({
         color: '#FF3E3E',
         fontSize: 14,
         marginBottom: 10,
-        marginLeft:20
-      },
+        marginLeft: 20
+    },
+    editIconContainer: {
+        position: 'absolute',
+        top: 10,
+        right: 30,
+    },
+    editIcon: {
+        color: '#000',
+        marginBottom: 10
+    },
+
+
+    dropdownButtonStyle: {
+        width: '95%',
+        height: 50,
+        backgroundColor: '#E9ECEF',
+        borderRadius: 12,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 12,
+    },
+    dropdownButtonTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#151E26',
+    },
+    dropdownButtonArrowStyle: {
+        fontSize: 28,
+    },
+    dropdownButtonIconStyle: {
+        fontSize: 28,
+        marginRight: 8,
+    },
+    dropdownMenuStyle: {
+        backgroundColor: '#E9ECEF',
+        borderRadius: 8,
+    },
+    dropdownItemStyle: {
+        width: '100%',
+        flexDirection: 'row',
+        paddingHorizontal: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
+    dropdownItemTxtStyle: {
+        flex: 1,
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#151E26',
+    },
+    dropdownItemIconStyle: {
+        fontSize: 28,
+        marginRight: 8,
+    },
+
 });
 export default styles;
