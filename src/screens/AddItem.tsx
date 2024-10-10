@@ -24,7 +24,6 @@ const AddItem = ({ navigation, route }: any) => {
     const [amount, setAmount] = useState(expense?.amount?.toString() || '');
     const [date, setDate] = useState(expense?.date || '');
     const [notes, setNotes] = useState(expense?.notes || '');
-    // const [paymentMode, setPaymentMode] = useState(expense?.paymentMode || '');
     const [paymentMode, setPaymentMode] = useState(mode === 'edit' ? expense.paymentMode : '');
     const [isEditable, setIsEditable] = useState(false)
     const [categoryName, setCategoryName] = useState(expense?.category || '');
@@ -34,7 +33,13 @@ const AddItem = ({ navigation, route }: any) => {
     const [paymentModeVerify, setPaymentModeVerify] = useState(false);
     const [dateVerify, setDateVerify] = useState(false);
     const [amountVerify, setAmountVerify] = useState(false);
+    const [catIndex, setCatIndex] = useState(0)
+    const [subCatIndex, setSubCatIndex] = useState(0);
     const newid = items.length ? Math.max(...items.map((sub: any) => sub.id)) + 1 : 1;
+
+    var value = {
+        radio: paymentMode
+    }
 
     useEffect(() => {
         if (mode === 'edit' && expense) {
@@ -45,6 +50,18 @@ const AddItem = ({ navigation, route }: any) => {
         }
     }, [expense, mode]);
 
+    useEffect(() => {
+        if (mode === 'edit' && categories.length > 0) {
+            const catId = categories.findIndex((cat: any) => cat.name === categoryValue);
+            setCatIndex(catId);
+            if (catId !== -1 && categories[catId].subcategories) {
+                const subCatId = categories[catId].subcategories.findIndex((subcat: any) => subcat.name === subcategoryValue);
+                setSubCatIndex(subCatId);
+                // setSubcategoryValue(categories[catId].subcategories[subCatId].name);
+            }
+        }
+    }, [categories, categoryValue, subcategoryValue, mode]);
+
     let categoryCount = [];
     for (var i = 0; i < categories.length; i++) {
         categoryCount.push({
@@ -54,7 +71,14 @@ const AddItem = ({ navigation, route }: any) => {
     }
 
     let subcategory = [];
-    const selectedCategory = categories.find((cat: any) => cat.id === categoryValue);
+    let selectedCategory;
+    if (mode === 'edit') {
+        if (categoryCount[catIndex]) {
+            selectedCategory = categories.find((cat: any) => cat.id === categoryCount[catIndex].value);
+        }
+    } else {
+        selectedCategory = categories.find((cat: any) => cat.id === categoryValue);
+    }
     if (selectedCategory && selectedCategory.subcategories) {
         for (let i = 0; i < selectedCategory.subcategories.length; i++) {
             subcategory.push({
@@ -164,11 +188,8 @@ const AddItem = ({ navigation, route }: any) => {
     };
 
     const activateEdit = () => {
-        setIsEditable(true)
+        setIsEditable(!isEditable)
     }
-
-    console.log('category value----->', categoryValue);
-    console.log('category name----->', categoryName);
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -184,10 +205,9 @@ const AddItem = ({ navigation, route }: any) => {
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
-                        placeholder={!isFocus ? 'Select Category' : '...'}
+                        placeholder={!isFocus ? 'Select Category Text' : '...'}
                         searchPlaceholder="Search..."
-                        value={categoryValue}
-                        // value={mode === 'edit' ?  expense.category : categoryValue}
+                        value={mode === 'edit' ? categoryCount[catIndex] : categoryValue}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
@@ -195,9 +215,9 @@ const AddItem = ({ navigation, route }: any) => {
                             setCategoryName(item.label);
                             setIsFocus(false);
                         }}
-                        disable={mode === 'edit' ? !isEditable : false} />
+                        disable={mode === 'edit' ? isEditable : false}
+                    />
                     {categoryVerify && <Text style={styles.error}>Select Category</Text>}
-
                     <Dropdown
                         style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
                         placeholderStyle={styles.placeholderStyle}
@@ -210,8 +230,7 @@ const AddItem = ({ navigation, route }: any) => {
                         valueField="value"
                         placeholder={!isFocus ? 'Select SubCategory' : '...'}
                         searchPlaceholder="Search..."
-                        value={subcategoryValue}
-                        // value={mode === 'edit' ? expense.subcategory : subcategoryValue}
+                        value={mode === 'edit' ? subcategory[subCatIndex] : subcategoryValue}
                         onFocus={() => setIsFocus(true)}
                         onBlur={() => setIsFocus(false)}
                         onChange={item => {
@@ -242,7 +261,6 @@ const AddItem = ({ navigation, route }: any) => {
                     </TouchableOpacity>
                 </View>
                 {dateVerify && <Text style={styles.error}>Select Date</Text>}
-
                 <Text style={styles.amount}>Amount</Text>
                 <View style={styles.dateOfBirthContainer}>
                     <MaterialIcon name='currency-rupee' style={styles.icon} />
@@ -257,11 +275,12 @@ const AddItem = ({ navigation, route }: any) => {
                 {amountVerify && <Text style={styles.error}>Enter Amount</Text>}
                 <View style={styles.radioButton}>
                     <Text style={styles.payment}>Payment Mode</Text>
-                    <RadioButton setPaymentMode={setPaymentMode} selectedValue={paymentMode}
-                        disabled={mode === 'edit' ? !isEditable : false} />
+
+                    <RadioButton setPaymentMode={setPaymentMode} {...value}
+                    disabled={mode === 'edit' ? !isEditable : false}
+                    />
                 </View>
                 {paymentModeVerify && <Text style={styles.error}>Select Payment Mode</Text>}
-
                 <Text style={styles.notesField}>Notes</Text>
                 <View style={styles.notes}>
                     <TextInput

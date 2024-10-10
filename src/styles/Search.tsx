@@ -1,11 +1,9 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: '#ECDFCC'
     },
     search: {
         flexDirection: 'row',
@@ -14,7 +12,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         marginVertical: 10,
-        width: '90%'
+        width: '90%',
+        alignSelf: 'center',
     },
     searchIcon: {
         marginRight: 10,
@@ -24,59 +23,45 @@ const styles = StyleSheet.create({
         height: 40,
         color: '#000',
     },
-    dropdown: {
-        height: 50,
-        borderColor: 'gray',
-        borderWidth: 0.5,
-        borderRadius: 8,
-        paddingHorizontal: 8,
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
-    icon: {
-        marginRight: 5,
-    },
-    label: {
-        position: 'absolute',
+    modalView: {
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'white',
+        width: '40%',
+        padding: 15,
         backgroundColor: 'white',
-        left: 22,
-        top: 8,
-        zIndex: 999,
-        paddingHorizontal: 8,
-        fontSize: 14,
+        position: 'absolute',
+        top: 69,
+        right: 30,
     },
-    placeholderStyle: {
-        fontSize: 16,
+    modalOption: {
+        padding: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
     },
-    selectedTextStyle: {
-        fontSize: 16,
+    modalText: {
+        fontSize: 10,
+        color: 'black',
+        fontWeight: '500',
     },
-    iconStyle: {
-        width: 20,
-        height: 20,
+    closeButton: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        padding: 5,
     },
-    inputSearchStyle: {
-        height: 40,
-        fontSize: 16,
-    },
-    modalView:{
-
-    },
-    modalOption:{
-
-
-    },
-    modalText:{
-
-    },
-    closeButton:{
-
-    },
-    closeIcon:{
-
+    closeIcon: {
+        color: 'black',
     },
     overlay: {
-        // flex: 1,
         paddingHorizontal: 20,
-      },
+    },
 });
 
 export default styles;

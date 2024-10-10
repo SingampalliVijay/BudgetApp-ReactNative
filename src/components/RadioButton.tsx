@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import RadioGroup from 'react-native-radio-buttons-group';
 
-export default function RadioButton({ setPaymentMode, initialValue }: any) {
+export default function RadioButton(props: any) {
+    console.log('this is the props', props)
     const radioButtons = useMemo(() => ([
         {
             id: '1',
@@ -14,21 +15,21 @@ export default function RadioButton({ setPaymentMode, initialValue }: any) {
             value: 'Card'
         }
     ]), []);
-
     const [selectedId, setSelectedId] = useState('');
 
     useEffect(() => {
-        const initialButton = radioButtons.find(radio => radio.value === initialValue);
+        console.log('Initial value ', props.radio);
+        const initialButton = radioButtons.find(radio => radio.value == props.radio);
         if (initialButton) {
             setSelectedId(initialButton.id);
         }
-    }, [initialValue, radioButtons]);
+    }, [props.radio, radioButtons]);
 
     const handlePress = (id: string) => {
         setSelectedId(id);
         const selectedButton = radioButtons.find(radio => radio.id === id);
         if (selectedButton) {
-            setPaymentMode(selectedButton.value);
+            props.setPaymentMode(selectedButton.value);
         }
     };
 
