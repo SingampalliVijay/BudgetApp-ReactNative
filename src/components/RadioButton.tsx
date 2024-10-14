@@ -26,6 +26,7 @@ export default function RadioButton(props: any) {
     }, [props.radio, radioButtons]);
 
     const handlePress = (id: string) => {
+        // if (props.disabled) return;
         setSelectedId(id);
         const selectedButton = radioButtons.find(radio => radio.id === id);
         if (selectedButton) {

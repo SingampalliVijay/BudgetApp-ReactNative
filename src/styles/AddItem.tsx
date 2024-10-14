@@ -63,6 +63,17 @@ const styles = StyleSheet.create({
         color: 'black',
         marginLeft: 20
     },
+    radioButtonEnable: {
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderRadius: 10,
+        margin: 10,
+        width: '89%',
+        marginLeft: 20,
+        padding: 10,
+        paddingLeft: 17,
+        borderColor: 'gray',
+    },
     radioButton: {
         flexDirection: 'row',
         borderWidth: 1,
@@ -73,6 +84,7 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingLeft: 17,
         borderColor: 'gray',
+        pointerEvents:"none"
     },
     payment: {
         fontSize: 15,

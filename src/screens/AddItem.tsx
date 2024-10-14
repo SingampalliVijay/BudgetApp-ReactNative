@@ -13,7 +13,8 @@ import Toast from 'react-native-toast-message';
 import AntIcon from 'react-native-vector-icons/AntDesign'
 
 const AddItem = ({ navigation, route }: any) => {
-    const [isFocus, setIsFocus] = useState(false);
+    const [categoryFocus, setCategoryFocus] = useState(false);
+    const [subcategoryFocus, setSubcategoryFocus] = useState(false);
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const categories = useSelector((state: any) => state.budget.categories);
     const items = useSelector((state: any) => state.budget.items);
@@ -37,7 +38,7 @@ const AddItem = ({ navigation, route }: any) => {
     const [subCatIndex, setSubCatIndex] = useState(0);
     const newid = items.length ? Math.max(...items.map((sub: any) => sub.id)) + 1 : 1;
 
-    var value = {
+    const value = {
         radio: paymentMode
     }
 
@@ -57,7 +58,6 @@ const AddItem = ({ navigation, route }: any) => {
             if (catId !== -1 && categories[catId].subcategories) {
                 const subCatId = categories[catId].subcategories.findIndex((subcat: any) => subcat.name === subcategoryValue);
                 setSubCatIndex(subCatId);
-                // setSubcategoryValue(categories[catId].subcategories[subCatId].name);
             }
         }
     }, [categories, categoryValue, subcategoryValue, mode]);
@@ -158,6 +158,8 @@ const AddItem = ({ navigation, route }: any) => {
             };
             if (mode === 'edit') {
                 dispatch(updateItem(updatedItem));
+                // console.log('Values For AMount ', categoryValue, subcategoryValue, addAmount)
+                // dispatch(addAmountToSubcategoryUpdate(categoryValue, subcategoryValue, addAmount));
             } else {
                 dispatch(addItem(newid, updatedItem.category, updatedItem.subcategory,
                     updatedItem.amount, updatedItem.date, updatedItem.notes, updatedItem.paymentMode));
@@ -196,7 +198,7 @@ const AddItem = ({ navigation, route }: any) => {
             <View style={styles.card}>
                 <View style={styles.dropdownView}>
                     <Dropdown
-                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        style={[styles.dropdown, categoryFocus && { borderColor: 'blue' }]}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
                         inputSearchStyle={styles.inputSearchStyle}
@@ -205,21 +207,20 @@ const AddItem = ({ navigation, route }: any) => {
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
-                        placeholder={!isFocus ? 'Select Category Text' : '...'}
+                        placeholder={!categoryFocus ? 'Select Category' : '...'}
                         searchPlaceholder="Search..."
                         value={mode === 'edit' ? categoryCount[catIndex] : categoryValue}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
+                        onFocus={() => setCategoryFocus(true)}
+                        onBlur={() => setCategoryFocus(false)}
                         onChange={item => {
                             setCategoryValue(item.value);
                             setCategoryName(item.label);
-                            setIsFocus(false);
                         }}
-                        disable={mode === 'edit' ? isEditable : false}
+                        disable={mode === 'edit' ? true : false}
                     />
                     {categoryVerify && <Text style={styles.error}>Select Category</Text>}
                     <Dropdown
-                        style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+                        style={[styles.dropdown, subcategoryFocus && { borderColor: 'blue' }]}
                         placeholderStyle={styles.placeholderStyle}
                         selectedTextStyle={styles.selectedTextStyle}
                         inputSearchStyle={styles.inputSearchStyle}
@@ -228,15 +229,14 @@ const AddItem = ({ navigation, route }: any) => {
                         maxHeight={300}
                         labelField="label"
                         valueField="value"
-                        placeholder={!isFocus ? 'Select SubCategory' : '...'}
+                        placeholder={!subcategoryFocus ? 'Select SubCategory' : '...'}
                         searchPlaceholder="Search..."
                         value={mode === 'edit' ? subcategory[subCatIndex] : subcategoryValue}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
+                        onFocus={() => setSubcategoryFocus(true)}
+                        onBlur={() => setSubcategoryFocus(false)}
                         onChange={item => {
                             setSubcategoryValue(item.value);
                             setSubCategoryName(item.label);
-                            setIsFocus(false);
                         }}
                         disable={mode === 'edit' ? !isEditable : false} />
                     {subCategoryVerify && <Text style={styles.error}>Select SubCategory</Text>}
@@ -265,7 +265,7 @@ const AddItem = ({ navigation, route }: any) => {
                 <View style={styles.dateOfBirthContainer}>
                     <MaterialIcon name='currency-rupee' style={styles.icon} />
                     <TextInput
-                        placeholder='Enter the Amount'
+                        placeholder='Enter Your Budget Amount'
                         value={amount}
                         onChangeText={setAmount}
                         keyboardType='numeric'
@@ -273,11 +273,10 @@ const AddItem = ({ navigation, route }: any) => {
                     />
                 </View>
                 {amountVerify && <Text style={styles.error}>Enter Amount</Text>}
-                <View style={styles.radioButton}>
+                <View style={isEditable ? styles.radioButtonEnable : styles.radioButton}>
                     <Text style={styles.payment}>Payment Mode</Text>
-
                     <RadioButton setPaymentMode={setPaymentMode} {...value}
-                    disabled={mode === 'edit' ? !isEditable : false}
+                    //  disabled={mode === 'edit'}
                     />
                 </View>
                 {paymentModeVerify && <Text style={styles.error}>Select Payment Mode</Text>}
