@@ -15,10 +15,7 @@ function* subcategoryList(action: any) {
             category: action.data.category 
         },
     });
-    // console.log('Saga ----> ', action);
 }
-
-
 
 function* budgetSaga() {
     yield takeEvery(ADD_CATEGORY, categoryList)
