@@ -99,6 +99,29 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderWidth: 1
     },
+    noExpenseContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+      },
+      noExpenseText: {
+        fontSize: 16,
+        color: '#555',
+      },
+      applyButton: {
+        backgroundColor: '#007BFF', // A blue color
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 15,
+    },
+    applyButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 });
 
 export default styles;

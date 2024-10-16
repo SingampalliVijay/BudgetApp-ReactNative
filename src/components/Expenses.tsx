@@ -1,4 +1,4 @@
-import { Alert, FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,29 +23,31 @@ const Expenses = ({ navigation }: any) => {
     let sortedItems = [...items];
 
     if (typeof filter === 'string') {
-      sortedItems = items.filter((item :any) => item.category === filter);
-  } else if (filter.type === 'search') {
+      sortedItems = items.filter((item: any) => item.category === filter);
+    } else if (filter.type === 'search') {
       sortedItems = items.filter((item: any) =>
-          item.category.toLowerCase().includes(filter.query.toLowerCase()) ||
-          item.subcategory.toLowerCase().includes(filter.query.toLowerCase())
+        item.category.toLowerCase().includes(filter.query.toLowerCase()) ||
+        item.subcategory.toLowerCase().includes(filter.query.toLowerCase())
       );
-  } else {
+    } else if (filter.type === 'all') {
+      sortedItems = [...items]
+      console.log('all cateogories for sorted', sortedItems)
+    }
+    else {
       if (filter === 'category') {
-          sortedItems.sort((a, b) => a.category.localeCompare(b.category));
+        sortedItems.sort((a, b) => a.category.localeCompare(b.category));
       } else if (filter === 'year') {
-          sortedItems.sort((a, b) => new Date(a.date).getFullYear() - new Date(b.date).getFullYear());
+        sortedItems.sort((a, b) => new Date(a.date).getFullYear() - new Date(b.date).getFullYear());
       } else if (filter === 'month') {
-          sortedItems.sort((a, b) => new Date(a.date).getMonth() - new Date(b.date).getMonth());
+        sortedItems.sort((a, b) => new Date(a.date).getMonth() - new Date(b.date).getMonth());
       } else if (filter === 'date') {
-          sortedItems.sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate());
+        sortedItems.sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate());
       }
-  }
+    }
     setFilteredItems(sortedItems);
+    console.log('Filtered Items === ', filteredItems)
   };
 
-  console.log('Expense List : ====> ', items)
-
-  console.log(' Year of TOday Itself =======> ', new Date().getFullYear())
   const handleItems = () => {
     navigation.navigate('AddItem')
   }
@@ -59,7 +61,6 @@ const Expenses = ({ navigation }: any) => {
   }
 
   const handleRefresh = () => {
-    Alert.alert('Refreshing the List')
     setRefreshing(true);
     setFilteredItems([...items])
     setRefreshing(false)
