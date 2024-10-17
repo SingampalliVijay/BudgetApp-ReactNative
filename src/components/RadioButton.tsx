@@ -2,7 +2,6 @@ import React, { useMemo, useState, useEffect } from 'react';
 import RadioGroup from 'react-native-radio-buttons-group';
 
 export default function RadioButton(props: any) {
-    console.log('this is the props', props)
     const radioButtons = useMemo(() => ([
         {
             id: '1',
@@ -18,7 +17,7 @@ export default function RadioButton(props: any) {
     const [selectedId, setSelectedId] = useState('');
 
     useEffect(() => {
-        console.log('Initial value ', props.radio);
+        // console.log('Initial value ', props.radio);
         const initialButton = radioButtons.find(radio => radio.value == props.radio);
         if (initialButton) {
             setSelectedId(initialButton.id);

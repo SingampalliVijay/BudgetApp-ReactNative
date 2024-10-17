@@ -4,8 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/Search';
 import { useSelector } from 'react-redux';
-import CheckBox from '@react-native-community/checkbox';
-
+import CheckBox from 'react-native-check-box'
 
 const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -13,7 +12,7 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [categorySearchQuery, setCategorySearchQuery] = useState('');
   const categories = useSelector((state: any) => state.budget.categories);
-  // const [selectedCategories, setSelectedCategories] = useState<{ [key: string]: boolean }>({});
+  const [selectedCategory, setSelectedCategory] = useState<any>([])
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -40,7 +39,7 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
     if (filterType === 'All') {
       handleAllCategory();
     } else {
-       onFilter(filterType);
+      onFilter(filterType);
     }
   };
 
@@ -62,20 +61,30 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
     onFilter({ type: 'all' });
   }
 
-  // const handleCategorySelection = (categoryName: string) => {
-  //   setSelectedCategories((prevState) => ({
-  //     ...prevState,
-  //     [categoryName]: !prevState[categoryName],
-  //   }));
-  // };
+  const applyCheckBox = (category: any) => {
+    if (category.name === 'All') {
+      if (selectedCategory.length === categories.length) {
+        setSelectedCategory([]);
+      } else {
+        setSelectedCategory(categories.map((cat: any) => cat.name));
+      }
+    } else {
+      if (selectedCategory.includes(category.name)) {
+        setSelectedCategory(selectedCategory.filter((cat: any) => cat !== category.name));
+      } else {
+        setSelectedCategory([...selectedCategory, category.name]);
+      }
+    }
+  };
 
-  // const applySelectedCategories = () => {
-  //   const selected = Object.keys(selectedCategories).filter(
-  //     (key) => selectedCategories[key]
-  //   );
-  //   onFilter({ type: 'categories', selected });
-  //   closeCategoryModal();
-  // };
+  const applySelectedCategories = () => {
+    if (selectedCategory.length > 0) {
+      onFilter({ type: 'category', category: selectedCategory });
+      setCategoryModalVisible(false);
+    } else {
+      Alert.alert('No Category Selected', 'Please select a category.');
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -158,29 +167,38 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
                   onChangeText={handleCategorySearch}
                 />
               </View>
-              <FlatList
-                data={searchCategory}
-                renderItem={({ item }) => (
-                  <Pressable
-                    style={styles.modalOption}
-                    onPress={() => {
-                      applyFilter(item.name);
-                      closeCategoryModal();
-                    }}
-                  >
-                  
-                    <Text style={styles.modalText}>{item.name}</Text>
-                  </Pressable>
-                )}
-                ListEmptyComponent={() => (
-                  <View style={styles.noExpenseContainer}>
-                    <Text style={styles.noExpenseText}>No expenses for selected category</Text>
-                  </View>
-                )}
-              />
+              <View style={{ flexDirection: 'row' }}>
+                <FlatList
+                  data={searchCategory}
+                  renderItem={({ item }) => (
+                    <View>
+                      <Pressable
+                        style={styles.modalOption}
+                        onPress={() => {
+                          applyFilter(item.name);
+                          closeCategoryModal();
+                        }}
+                      >
+                        <Text style={styles.modalText}>{item.name}</Text>
+                      </Pressable>
+                      <CheckBox
+                        isChecked={item.name === 'All' ? selectedCategory.length === categories.length : selectedCategory.includes(item.name)}
+                        onClick={() => applyCheckBox(item)}
+                        style={styles.checkbox}
+                        checkBoxColor='green'
+                      />
+                    </View>
+                  )}
+                  ListEmptyComponent={() => (
+                    <View style={styles.noExpenseContainer}>
+                      <Text style={styles.noExpenseText}>No Category Found</Text>
+                    </View>
+                  )}
+                />
+              </View>
               <TouchableOpacity
                 style={styles.applyButton}
-                // onPress={applySelectedCategories}
+                onPress={applySelectedCategories}
               >
                 <Text style={styles.applyButtonText}>Apply Filters</Text>
               </TouchableOpacity>

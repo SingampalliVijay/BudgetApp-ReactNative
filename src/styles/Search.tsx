@@ -104,13 +104,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
-      },
-      noExpenseText: {
+    },
+    noExpenseText: {
         fontSize: 16,
         color: '#555',
-      },
-      applyButton: {
-        backgroundColor: '#007BFF', // A blue color
+    },
+    applyButton: {
+        backgroundColor: '#007BFF',
         padding: 12,
         borderRadius: 8,
         alignItems: 'center',
@@ -121,6 +121,14 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    checkbox: {
+        // backgroundColor: '#FCFAEE',
+        backgroundColor: 'white',
+        borderWidth: 0,
+        position: 'absolute',
+        right: 18,
+        top:15
     },
 });
 

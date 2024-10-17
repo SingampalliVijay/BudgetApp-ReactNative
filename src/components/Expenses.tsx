@@ -1,4 +1,4 @@
-import { FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { Alert, FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,10 +28,17 @@ const Expenses = ({ navigation }: any) => {
       sortedItems = items.filter((item: any) =>
         item.category.toLowerCase().includes(filter.query.toLowerCase()) ||
         item.subcategory.toLowerCase().includes(filter.query.toLowerCase())
-      );
+      ); 
     } else if (filter.type === 'all') {
       sortedItems = [...items]
-      console.log('all cateogories for sorted', sortedItems)
+    }
+    else if (filter.type === 'category') {
+      console.log('Filter for Category', filter.category)
+      if (filter.category) {
+        sortedItems = items.filter((item: any) => filter.category.includes(item.category));
+      } else {
+        Alert.alert('No items for Seleted Category')
+      }
     }
     else {
       if (filter === 'category') {
