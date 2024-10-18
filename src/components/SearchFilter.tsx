@@ -5,14 +5,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/Search';
 import { useSelector } from 'react-redux';
 import CheckBox from 'react-native-check-box'
+import { Dropdown } from 'react-native-element-dropdown';
 
 const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
+  const [subcategoryModalVisible, setSubcategoryModalVisible] = useState(false);
   const [categorySearchQuery, setCategorySearchQuery] = useState('');
+  const [subcategorySearchQuery, setSubcategorySearchQuery] = useState('');
   const categories = useSelector((state: any) => state.budget.categories);
   const [selectedCategory, setSelectedCategory] = useState<any>([])
+  const [selectedSubcategory, setSelectedSubcategory] = useState<any>([]);
+  const [categoryValue, setCategoryValue] = useState('');
+  const [categoryName, setCategoryName] = useState('');
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -26,7 +32,20 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
 
   const closeCategoryModal = () => {
     setCategoryModalVisible(false);
+    setSelectedCategory([]);
+    setCategorySearchQuery('');
   }
+
+  const openSubcategoryModal = () => {
+    setSubcategoryModalVisible(true);
+    closeFilterModal();
+  };
+
+  const closeSubcategoryModal = () => {
+    setSubcategoryModalVisible(false);
+    setCategoryValue('')
+    setSelectedSubcategory([])
+  };
 
   const applySortFilter = (filterType: string) => {
     closeModal();
@@ -35,6 +54,7 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
 
   const applyFilter = (filterType: string) => {
     closeFilterModal();
+    setSelectedCategory([]);
     setCategorySearchQuery('');
     if (filterType === 'All') {
       handleAllCategory();
@@ -77,14 +97,72 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
     }
   };
 
+  let categoryList = [];
+  for (var i = 0; i < categories.length; i++) {
+    categoryList.push({
+      value: categories[i].id,
+      label: categories[i].name
+    });
+  }
+
+  let subcategory = [];
+  const selectedCat = categories.find((cat: any) => cat.id === categoryValue);
+  if (selectedCat && selectedCat.subcategories) {
+    for (let i = 0; i < selectedCat.subcategories.length; i++) {
+      subcategory.push(
+        selectedCat.subcategories[i].name
+      );
+    }
+  }
+
+  let searchSubcategory = [];
+  if (subcategory.length > 0) {
+    searchSubcategory = subcategorySearchQuery ? subcategory.filter((cat: any) =>
+      cat.toLowerCase().includes(subcategorySearchQuery.toLowerCase())) :
+      ['All', ...subcategory];
+  }
+
+  const applySubCategoryFilter = (filterType: string) => {
+    closeSubcategoryModal();
+    if (filterType === 'All') {
+      onFilter({ type: 'AllSubcategory', allsubcat: filterType, categoryId: categoryName })
+    } else {
+      onFilter({ type: 'subcategory', subcat: filterType });
+    }
+  };
+
   const applySelectedCategories = () => {
     if (selectedCategory.length > 0) {
       onFilter({ type: 'category', category: selectedCategory });
       setCategoryModalVisible(false);
+      setSelectedCategory([]);
     } else {
       Alert.alert('No Category Selected', 'Please select a category.');
     }
   };
+
+  const handleSubcategorySearch = (query: string) => {
+    setSubcategorySearchQuery(query);
+  };
+
+  const applySelectedSubcategories = () => {
+    console.log('Selected SubCategory', selectedCategory)
+    if (selectedSubcategory.length > 0) {
+      onFilter({ type: 'subcategories', subcategory: selectedSubcategory });
+      setSubcategoryModalVisible(false);
+      setCategoryValue('')
+      setSelectedSubcategory([])
+    } else {
+      Alert.alert('No Subcategory Selected', 'Please select a subcategory.');
+    }
+  };
+
+  const handleSubCategories = (subcategory: any) => {
+    const updatedSubcategories = selectedSubcategory.includes(subcategory)
+      ? selectedSubcategory.filter((sub: string) => sub !== subcategory)
+      : [...selectedSubcategory, subcategory];
+    setSelectedSubcategory(updatedSubcategories);
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -143,7 +221,7 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
               <Pressable style={styles.modalOption} onPress={openCategoryModal}>
                 <Text style={styles.modalText}>Category</Text>
               </Pressable>
-              <Pressable style={styles.modalOption} onPress={() => Alert.alert('Subcategory')}>
+              <Pressable style={styles.modalOption} onPress={openSubcategoryModal}>
                 <Text style={styles.modalText}>Subcategory</Text>
               </Pressable>
             </View>
@@ -199,6 +277,82 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
               <TouchableOpacity
                 style={styles.applyButton}
                 onPress={applySelectedCategories}
+              >
+                <Text style={styles.applyButtonText}>Apply Filters</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      <Modal
+        animationType="fade"
+        visible={subcategoryModalVisible}
+        transparent
+        onRequestClose={closeSubcategoryModal}
+      >
+        <TouchableWithoutFeedback onPress={closeSubcategoryModal}>
+          <View style={styles.modalOverlayCat}>
+            <View style={styles.modalViewCat}>
+              <View style={styles.searchCat}>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Search Subcategory..."
+                  value={subcategorySearchQuery}
+                  onChangeText={handleSubcategorySearch}
+                />
+              </View>
+              <Dropdown
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={categoryList}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder="Select Category"
+                searchPlaceholder="Search..."
+                value={categoryValue}
+                onChange={item => {
+                  setCategoryValue(item.value);
+                  setCategoryName(item.label)
+                }}
+              />
+              <View style={{ flexDirection: 'row' }}>
+                <FlatList
+                  data={searchSubcategory}
+                  renderItem={({ item }) => (
+                    <View>
+                      <Pressable
+                        style={styles.modalOption}
+                        onPress={() => {
+                          applySubCategoryFilter(item);
+                          closeSubcategoryModal()
+                        }}
+                      >
+                        <Text style={styles.modalText}>{item}</Text>
+                      </Pressable>
+                      <CheckBox
+                        // isChecked={selectedSubcategory.includes(item)}
+                        isChecked={
+                          item === 'All'
+                            ? selectedSubcategory.length === subcategory.length
+                            : selectedSubcategory.includes(item)
+                        }
+                        onClick={() => handleSubCategories(item)}
+                        style={styles.checkbox}
+                        checkBoxColor='green'
+                      />
+                    </View>
+                  )}
+                />
+              </View>
+              <TouchableOpacity
+                style={styles.applyButton}
+                onPress={applySelectedSubcategories}
               >
                 <Text style={styles.applyButtonText}>Apply Filters</Text>
               </TouchableOpacity>

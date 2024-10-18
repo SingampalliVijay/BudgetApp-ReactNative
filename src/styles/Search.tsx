@@ -130,6 +130,30 @@ const styles = StyleSheet.create({
         right: 18,
         top:15
     },
+    dropdown: {
+        margin: 10,
+        height: 50,
+        borderBottomColor: 'gray',
+        borderBottomWidth: 0.5,
+        // borderColor:'black',
+        // borderWidth:0.5,
+        // borderRadius:10
+      },
+      placeholderStyle: {
+        fontSize: 16,
+      },
+      selectedTextStyle: {
+        fontSize: 16,
+        paddingLeft:10
+      },
+      iconStyle: {
+        width: 20,
+        height: 20,
+      },
+      inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+      },
 });
 
 export default styles;

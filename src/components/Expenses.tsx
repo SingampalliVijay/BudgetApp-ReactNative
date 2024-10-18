@@ -24,18 +24,33 @@ const Expenses = ({ navigation }: any) => {
 
     if (typeof filter === 'string') {
       sortedItems = items.filter((item: any) => item.category === filter);
-    } else if (filter.type === 'search') {
+    }
+    else if (filter.type === 'subcategory') {
+      sortedItems = items.filter((item: any) => item.subcategory === filter.subcat);
+    }
+    else if (filter.type === 'search') {
       sortedItems = items.filter((item: any) =>
         item.category.toLowerCase().includes(filter.query.toLowerCase()) ||
         item.subcategory.toLowerCase().includes(filter.query.toLowerCase())
-      ); 
-    } else if (filter.type === 'all') {
+      );
+    }
+    else if (filter.type === 'AllSubcategory') {
+      sortedItems = items.filter((item: any) => item.category === filter.categoryId);
+    }
+    else if (filter.type === 'all') {
       sortedItems = [...items]
     }
     else if (filter.type === 'category') {
-      console.log('Filter for Category', filter.category)
       if (filter.category) {
-        sortedItems = items.filter((item: any) => filter.category.includes(item.category));
+        sortedItems = items.filter((item: any) => filter.category.subcategories.includes(item.subcategory));
+      } else {
+        Alert.alert('No items for Seleted Category')
+      }
+    }
+    else if (filter.type === 'subcategories') {
+      if (filter.subcategory) {
+        console.log('console',filter.subcategory )
+        sortedItems = items.filter((item: any) => filter.subcategory.includes(item.subcategory));
       } else {
         Alert.alert('No items for Seleted Category')
       }
