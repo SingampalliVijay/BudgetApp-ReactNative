@@ -42,7 +42,7 @@ const Expenses = ({ navigation }: any) => {
     }
     else if (filter.type === 'category') {
       if (filter.category) {
-        sortedItems = items.filter((item: any) => filter.category.subcategories.includes(item.subcategory));
+        sortedItems = items.filter((item: any) => filter.category.includes(item.category));
       } else {
         Alert.alert('No items for Seleted Category')
       }

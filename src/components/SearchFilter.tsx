@@ -146,7 +146,6 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   };
 
   const applySelectedSubcategories = () => {
-    console.log('Selected SubCategory', selectedCategory)
     if (selectedSubcategory.length > 0) {
       onFilter({ type: 'subcategories', subcategory: selectedSubcategory });
       setSubcategoryModalVisible(false);
@@ -172,7 +171,6 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
         setSelectedSubcategory([...selectedSubcategory, subcategory]);
       }
     }
-    console.log('Selected SubCateogry ', selectedSubcategory)
   };
 
   return (
