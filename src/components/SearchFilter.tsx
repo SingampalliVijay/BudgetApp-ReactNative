@@ -157,12 +157,23 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
     }
   };
 
-  const handleSubCategories = (subcategory: any) => {
-    const updatedSubcategories = selectedSubcategory.includes(subcategory)
-      ? selectedSubcategory.filter((sub: string) => sub !== subcategory)
-      : [...selectedSubcategory, subcategory];
-    setSelectedSubcategory(updatedSubcategories);
-  }
+  const handleSubCategories = (subcategory: string) => {
+    if (subcategory === 'All') {
+      if (selectedSubcategory.length === searchSubcategory.length) {
+        setSelectedSubcategory([]);
+      } else {
+        setSelectedSubcategory(searchSubcategory.map((subCat: any) => subCat));
+      }
+    }
+    else {
+      if (selectedSubcategory.includes(subcategory)) {
+        setSelectedSubcategory(selectedSubcategory.filter((sub: string) => sub !== subcategory));
+      } else {
+        setSelectedSubcategory([...selectedSubcategory, subcategory]);
+      }
+    }
+    console.log('Selected SubCateogry ', selectedSubcategory)
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -336,10 +347,9 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
                         <Text style={styles.modalText}>{item}</Text>
                       </Pressable>
                       <CheckBox
-                        // isChecked={selectedSubcategory.includes(item)}
                         isChecked={
                           item === 'All'
-                            ? selectedSubcategory.length === subcategory.length
+                            ? selectedSubcategory.length === searchSubcategory.length
                             : selectedSubcategory.includes(item)
                         }
                         onClick={() => handleSubCategories(item)}

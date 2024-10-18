@@ -30,37 +30,39 @@ const Profile = ({ navigation, route }: any) => {
       <View style={styles.titleView}>
         <Text style={styles.title}>User Profile</Text>
       </View>
-        <Modal
-          animationType="fade"
-          visible={visible}
-          transparent
-          onRequestClose={() => setVisible(false)}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
+      <Modal
+        animationType="fade"
+        visible={visible}
+        transparent
+        onRequestClose={() => setVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Money Manager makes managing personal finances as easy as pie!
+              Now easily record your personal and business financial transactions,
+              generate spending reports, review your daily, weekly and monthly financial data and
+              manage your assets with Money Manager's spending tracker and budget planner.
+            </Text>
+            <View>
               <TouchableOpacity onPress={() => setVisible(false)}>
                 <Icon name='close-circle-outline' style={styles.closeIcon} />
               </TouchableOpacity>
-              <Text style={styles.modalText}>Money Manager makes managing personal finances as easy as pie!
-                Now easily record your personal and business financial transactions,
-                generate spending reports, review your daily, weekly and monthly financial data and
-                manage your assets with Money Manager's spending tracker and budget planner.
-              </Text>
             </View>
           </View>
-        </Modal>
+        </View>
+      </Modal>
 
-        <View style={styles.profileView}>
-          <FontAwesome name='user-circle' size={90} style={styles.user} />
-          {/* <Text>{name}</Text> */}
-          <TextInput
-            placeholder='Enter Your Name Here'
-            multiline
-            value={profile ? profile.name : ''}
-            style={styles.name}
-            editable={false}
-          />
-          <View>
+      <View style={styles.profileView}>
+        <FontAwesome name='user-circle' size={90} style={styles.user} />
+        {/* <Text>{name}</Text> */}
+        <TextInput
+          placeholder='Enter Your Name Here'
+          multiline
+          value={profile ? profile.name : ''}
+          style={styles.name}
+          editable={false}
+        />
+        <View>
           <TouchableOpacity onPress={handleSettings} >
             <Icon name='settings' size={30} style={styles.settingIcon} />
           </TouchableOpacity>
@@ -68,13 +70,13 @@ const Profile = ({ navigation, route }: any) => {
             <MaterialIcon name='edit' size={30} style={styles.editIcon} />
           </TouchableOpacity>
         </View>
+      </View>
+      <TouchableOpacity onPress={handleAbout}>
+        <View style={styles.aboutView}>
+          <FontAwesome name='comment-o' size={25} style={styles.aboutIcon} />
+          <Text style={styles.about}>About App</Text>
         </View>
-        <TouchableOpacity onPress={handleAbout}>
-          <View style={styles.aboutView}>
-            <FontAwesome name='comment-o' size={25} style={styles.aboutIcon} />
-            <Text style={styles.about}>About App</Text>
-          </View>
-        </TouchableOpacity>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
