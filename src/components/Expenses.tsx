@@ -49,20 +49,20 @@ const Expenses = ({ navigation }: any) => {
     }
     else if (filter.type === 'subcategories') {
       if (filter.subcategory) {
-        console.log('console',filter.subcategory )
+        console.log('console', filter.subcategory)
         sortedItems = items.filter((item: any) => filter.subcategory.includes(item.subcategory));
       } else {
         Alert.alert('No items for Seleted Category')
       }
     }
-    else {
-      if (filter === 'category') {
+    else if(filter.sort){
+      if (filter.sort === 'sortcategory') {
         sortedItems.sort((a, b) => a.category.localeCompare(b.category));
-      } else if (filter === 'year') {
+      } else if (filter.sort === 'year') {
         sortedItems.sort((a, b) => new Date(a.date).getFullYear() - new Date(b.date).getFullYear());
-      } else if (filter === 'month') {
+      } else if (filter.sort === 'month') {
         sortedItems.sort((a, b) => new Date(a.date).getMonth() - new Date(b.date).getMonth());
-      } else if (filter === 'date') {
+      } else if (filter.sort === 'date') {
         sortedItems.sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate());
       }
     }

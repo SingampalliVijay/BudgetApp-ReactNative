@@ -123,7 +123,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     checkbox: {
-        // backgroundColor: '#FCFAEE',
         backgroundColor: 'white',
         borderWidth: 0,
         position: 'absolute',
@@ -135,9 +134,6 @@ const styles = StyleSheet.create({
         height: 50,
         borderBottomColor: 'gray',
         borderBottomWidth: 0.5,
-        // borderColor:'black',
-        // borderWidth:0.5,
-        // borderRadius:10
       },
       placeholderStyle: {
         fontSize: 16,

@@ -7,7 +7,9 @@ const UpdateProfile = ({ navigation }: any) => {
 
     const handleProfile = (profile: any) => {
         navigation.navigate('Profile', { profile })
+        // navigation.navigate('Category', { profile })
     }
+
     return (
         <SafeAreaView>
             <View>
