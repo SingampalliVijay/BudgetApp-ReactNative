@@ -47,9 +47,9 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
     setSelectedSubcategory([])
   };
 
-  const applySortFilter = (filterType: string) => {
+  const applySortFilter = (sortType: string) => {
     closeModal();
-    onFilter(filterType);
+    onFilter({ sort: sortType });
   };
 
   const applyFilter = (filterType: string) => {
@@ -146,7 +146,6 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   };
 
   const applySelectedSubcategories = () => {
-    console.log('Selected SubCategory', selectedCategory)
     if (selectedSubcategory.length > 0) {
       onFilter({ type: 'subcategories', subcategory: selectedSubcategory });
       setSubcategoryModalVisible(false);
@@ -172,7 +171,6 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
         setSelectedSubcategory([...selectedSubcategory, subcategory]);
       }
     }
-    console.log('Selected SubCateogry ', selectedSubcategory)
   };
 
   return (
@@ -204,7 +202,7 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.modalOverlay}>
             <View style={styles.modalView}>
-              <Pressable style={styles.modalOption} onPress={() => applySortFilter('category')}>
+              <Pressable style={styles.modalOption} onPress={() => applySortFilter('sortcategory')}>
                 <Text style={styles.modalText}>Sort by Category</Text>
               </Pressable>
               <Pressable style={styles.modalOption} onPress={() => applySortFilter('year')}>

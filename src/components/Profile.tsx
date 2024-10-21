@@ -18,6 +18,7 @@ const Profile = ({ navigation, route }: any) => {
   const handleUpdate = () => {
     Alert.alert('Update')
     navigation.navigate('UpdateProfile')
+    
   }
 
   const handleSettings = () => {

@@ -7,7 +7,7 @@ import { addCategory } from '../redux/BudgetAction'
 import styles from '../styles/Categories'
 import OctiIcon from 'react-native-vector-icons/Octicons'
 
-const Categories = ({ navigation }: any) => {
+const Categories = ({ navigation, route }: any) => {
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
