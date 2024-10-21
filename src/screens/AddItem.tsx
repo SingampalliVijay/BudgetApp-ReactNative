@@ -256,7 +256,7 @@ const AddItem = ({ navigation, route }: any) => {
                         editable={mode === 'edit' ? isEditable : false}
                         value={date}
                     />
-                    <TouchableOpacity onPress={showDatePicker}>
+                    <TouchableOpacity disabled={mode === 'edit' ? !isEditable : false} onPress={showDatePicker}>
                         <Icon name='calendar-outline' style={styles.icon} />
                     </TouchableOpacity>
                 </View>
