@@ -3,20 +3,42 @@ import { StyleSheet } from 'react-native'
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#E5D9F2'
+    backgroundColor: '#F4F4F4',
+
   },
+  // toolbar: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'space-between',
+  //   padding: 10,
+  //   backgroundColor: '#f0f0f0',
+  //   borderBottomWidth: 1,
+  //   borderBottomColor: '#ccc',
+  // },
   toolbar: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
-    backgroundColor: '#f0f0f0',
+    padding: 15,
+    backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    elevation: 4,
   },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  length: {
+    height: 30,
+    width: 30,
+    borderRadius: 30,
+    borderWidth: 0.4,
+    color: 'black',
+    fontWeight: '500',
+    paddingTop: 6,
+    textAlign: 'center',
+    backgroundColor:'#FFCF9D'
   },
   main: {
     fontSize: 20,

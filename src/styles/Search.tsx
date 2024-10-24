@@ -87,6 +87,51 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        height: 550
+    },
+    modalViewAmount: {
+        width: '85%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    modalViewSubCat: {
+        width: '85%',
+        height: 500,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    modalViewCalender: {
+        width: '90%',
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        height: 500
     },
     searchCat: {
         flexDirection: 'row',
@@ -115,7 +160,24 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 15,
+        position: 'absolute',
+        bottom: 20,
+        width: '100%',
+        alignSelf: 'center',
+    },
+    applyButtonCalender: {
+        backgroundColor: '#007BFF',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    applyButtonAmount: {
+        backgroundColor: '#007BFF',
+        padding: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     applyButtonText: {
         color: 'white',
@@ -127,29 +189,46 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         position: 'absolute',
         right: 18,
-        top:15
+        top: 15
     },
     dropdown: {
         margin: 10,
         height: 50,
         borderBottomColor: 'gray',
         borderBottomWidth: 0.5,
-      },
-      placeholderStyle: {
+    },
+    placeholderStyle: {
         fontSize: 16,
-      },
-      selectedTextStyle: {
+    },
+    selectedTextStyle: {
         fontSize: 16,
-        paddingLeft:10
-      },
-      iconStyle: {
+        paddingLeft: 10
+    },
+    iconStyle: {
         width: 20,
         height: 20,
-      },
-      inputSearchStyle: {
+    },
+    inputSearchStyle: {
         height: 40,
         fontSize: 16,
-      },
+    },
+    amountFilter: {
+        fontSize: 20,
+        color: 'black',
+        textAlign: 'center',
+        padding: 3,
+        borderBottomWidth: 0.4,
+        fontWeight: '700'
+    },
+    inputLow: {
+        color: 'black',
+        fontWeight: '500',
+        borderColor: 'black',
+        borderWidth: 0.4,
+        borderRadius: 10,
+        margin: 10,
+        padding: 10
+    }
 });
 
 export default styles;

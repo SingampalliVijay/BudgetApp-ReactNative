@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "35768041654",
+    "project_id": "budgetproject-70a59",
+    "storage_bucket": "budgetproject-70a59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35768041654:android:3628ead1a1061dae6d2617",
+        "android_client_info": {
+          "package_name": "com.imag.budgetApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX9c2z8Fxn1b7tE1rbQIv1wxVErz5uicM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

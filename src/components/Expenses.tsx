@@ -7,6 +7,8 @@ import SearchFilter from './SearchFilter';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons'
 import { deleteItem } from '../redux/BudgetAction';
+import Toast from 'react-native-toast-message';
+
 const Expenses = ({ navigation }: any) => {
   const items = useSelector((state: any) => state.budget.items);
   const [refreshing, setRefreshing] = useState(false);
@@ -49,13 +51,45 @@ const Expenses = ({ navigation }: any) => {
     }
     else if (filter.type === 'subcategories') {
       if (filter.subcategory) {
-        console.log('console', filter.subcategory)
         sortedItems = items.filter((item: any) => filter.subcategory.includes(item.subcategory));
       } else {
         Alert.alert('No items for Seleted Category')
       }
-    }
-    else if(filter.sort){
+    } else if (filter.type === 'amount') {
+      if (filter.low < filter.high) {
+        sortedItems = items.filter((item: any) =>
+          item.amount >= filter.low && item.amount <= filter.high
+        );
+        if (sortedItems.length === 0) {
+          Toast.show({
+            type: 'error',
+            text1: 'No Expenses Found For this Range',
+            position: 'bottom'
+          });
+        }
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Min amount should be lessthan Max amount',
+          position: 'top'
+        });
+        sortedItems = []
+      }
+    } else if (filter.type === 'calendar') {
+      const startDate = new Date(filter.start);
+      const endDate = new Date(filter.end);
+      sortedItems = items.filter((item: any) => {
+        const itemDate = new Date(item.date);
+        return itemDate >= startDate && itemDate <= endDate;
+      });
+      if (sortedItems.length === 0) {
+        Toast.show({
+          type: 'error',
+          text1: 'No Expenses Found For this Range',
+          position: 'bottom',
+        });
+      }
+    } else if (filter.sort) {
       if (filter.sort === 'sortcategory') {
         sortedItems.sort((a, b) => a.category.localeCompare(b.category));
       } else if (filter.sort === 'year') {

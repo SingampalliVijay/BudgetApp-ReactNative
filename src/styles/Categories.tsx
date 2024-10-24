@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#CEDF9F'
+    backgroundColor: '#CEDF9F',
   },
   overlay: {
     flex: 1,
@@ -23,16 +23,33 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 4,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   itemText: {
     fontSize: 20,
     color: 'black',
-    textAlign: 'center'
+    textAlign: 'center', 
+    flex: 1,
+  },
+  countCircle: {
+    width: 40, 
+    height: 40, 
+    borderRadius: 20,
+    backgroundColor: '#FFB26F',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  countText: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
   },
   addButton: {
     position: 'absolute',
     bottom: 30,
-    right: 20
+    right: 20,
   },
   addIcon: {
     color: '#1E3E62',
@@ -45,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     margin: 20,
     marginBottom: 15,
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   centeredView: {
     flex: 1,
@@ -81,7 +98,7 @@ const styles = StyleSheet.create({
   modalIcon: {
     fontSize: 30,
     marginLeft: 120,
-    color: 'black'
+    color: 'black',
   },
   modalContainer: {
     flexDirection: 'row',
@@ -115,11 +132,22 @@ const styles = StyleSheet.create({
     color: 'black',
     marginLeft: 8,
   },
+  length: {
+    height: 30,
+    width: 30,
+    borderRadius: 30,
+    borderWidth: 0.4,
+    color: 'black',
+    fontWeight: '500',
+    paddingTop: 6,
+    textAlign: 'center',
+    backgroundColor:'#FFCF9D'
+  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth:0.6,
-    borderRadius:6,
+    borderWidth: 0.6,
+    borderRadius: 6,
     flex: 1,
   },
   searchInput: {
@@ -136,7 +164,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   closeIcon: {
-    marginRight: 5,
+    marginRight: 10,
   },
   octiIcon: {
     marginRight: 8,

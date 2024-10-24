@@ -6,12 +6,17 @@ import styles from '../styles/Search';
 import { useSelector } from 'react-redux';
 import CheckBox from 'react-native-check-box'
 import { Dropdown } from 'react-native-element-dropdown';
+import AmountRange from './AmountRange';
+import CalenderRange from './CalenderRange';
 
 const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterModalVisible, setFilterModalVisible] = useState(false);
   const [categoryModalVisible, setCategoryModalVisible] = useState(false);
   const [subcategoryModalVisible, setSubcategoryModalVisible] = useState(false);
+  const [amountModalVisible, setAmountModalVisible] = useState(false);
+  const [calenderModalVisible, setCalenderModalVisible] = useState(false);
+
   const [categorySearchQuery, setCategorySearchQuery] = useState('');
   const [subcategorySearchQuery, setSubcategorySearchQuery] = useState('');
   const categories = useSelector((state: any) => state.budget.categories);
@@ -19,6 +24,10 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState<any>([]);
   const [categoryValue, setCategoryValue] = useState('');
   const [categoryName, setCategoryName] = useState('');
+  const [lowAmount, setLowAmount] = useState('');
+  const [highAmount, setHighAmount] = useState('');
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
@@ -44,7 +53,26 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
   const closeSubcategoryModal = () => {
     setSubcategoryModalVisible(false);
     setCategoryValue('')
+    setSubcategorySearchQuery('');
     setSelectedSubcategory([])
+  };
+
+  const openAmountModal = () => {
+    setAmountModalVisible(true);
+    closeFilterModal();
+  };
+
+  const closeAmountModal = () => {
+    setAmountModalVisible(false);
+  };
+
+  const openCalenderModal = () => {
+    setCalenderModalVisible(true);
+    closeFilterModal();
+  };
+
+  const closeCalenderModal = () => {
+    setCalenderModalVisible(false);
   };
 
   const applySortFilter = (sortType: string) => {
@@ -173,6 +201,24 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
     }
   };
 
+  const applyAmountFilter = () => {
+    if (lowAmount === '' || highAmount === '') {
+      Alert.alert('Invalid Input', 'Please enter both Low and High amount values.');
+    }
+    onFilter({ type: 'amount', low: Number(lowAmount), high: Number(highAmount) });
+    setLowAmount('');
+    setHighAmount('');
+    closeAmountModal()
+  };
+
+  const applyCalendarFilter = () => {
+    // console.log('start Date' ,startDate + ' end Date' , endDate)
+    onFilter({ type: 'calendar', start: startDate?.toDateString(), end: endDate?.toDateString() });
+    setStartDate(null);
+    setEndDate(null);
+    closeCalenderModal()
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.search}>
@@ -233,6 +279,12 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
               <Pressable style={styles.modalOption} onPress={openSubcategoryModal}>
                 <Text style={styles.modalText}>Subcategory</Text>
               </Pressable>
+              <Pressable style={styles.modalOption} onPress={openAmountModal}>
+                <Text style={styles.modalText}>Amount</Text>
+              </Pressable>
+              <Pressable style={styles.modalOption} onPress={openCalenderModal}>
+                <Text style={styles.modalText}>Calendar</Text>
+              </Pressable>
             </View>
           </View>
         </TouchableWithoutFeedback>
@@ -254,7 +306,7 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
                   onChangeText={handleCategorySearch}
                 />
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{ flexDirection: 'row', height: 400, marginBottom: 20 }}>
                 <FlatList
                   data={searchCategory}
                   renderItem={({ item }) => (
@@ -302,15 +354,7 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
       >
         <TouchableWithoutFeedback onPress={closeSubcategoryModal}>
           <View style={styles.modalOverlayCat}>
-            <View style={styles.modalViewCat}>
-              <View style={styles.searchCat}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Search Subcategory..."
-                  value={subcategorySearchQuery}
-                  onChangeText={handleSubcategorySearch}
-                />
-              </View>
+            <View style={styles.modalViewSubCat}>
               <Dropdown
                 style={styles.dropdown}
                 placeholderStyle={styles.placeholderStyle}
@@ -330,7 +374,18 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
                   setCategoryName(item.label)
                 }}
               />
-              <View style={{ flexDirection: 'row' }}>
+
+              {categoryValue && (
+                <View style={styles.searchCat}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Search Subcategory..."
+                    value={subcategorySearchQuery}
+                    onChangeText={handleSubcategorySearch}
+                  />
+                </View>
+              )}
+              <View style={{ flexDirection: 'row', height: 250 }}>
                 <FlatList
                   data={searchSubcategory}
                   renderItem={({ item }) => (
@@ -368,8 +423,72 @@ const SearchFilter = ({ onFilter, modalVisible, setModalVisible }: any) => {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
+
+      <Modal
+        animationType="fade"
+        visible={amountModalVisible}
+        transparent
+        onRequestClose={closeAmountModal}
+      >
+        <TouchableWithoutFeedback onPress={closeAmountModal}>
+          <View style={styles.modalOverlayCat}>
+            <View style={styles.modalViewAmount}>
+              <View >
+                <Text style={styles.amountFilter}> Filter By Amount</Text>
+                <AmountRange minAmount={lowAmount} maxAmount={highAmount} />
+                <TextInput
+                  style={styles.inputLow}
+                  placeholder="Min"
+                  value={lowAmount}
+                  keyboardType="numeric"
+                  onChangeText={setLowAmount}
+                  placeholderTextColor="#ccc"
+                />
+                <TextInput
+                  style={styles.inputLow}
+                  placeholder="Max"
+                  value={highAmount}
+                  keyboardType="numeric"
+                  onChangeText={setHighAmount}
+                  placeholderTextColor="#ccc"
+                />
+                <TouchableOpacity
+                  style={styles.applyButtonAmount}
+                  onPress={applyAmountFilter}
+                >
+                  <Text style={styles.applyButtonText}>Apply</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+
+      <Modal
+        animationType="fade"
+        visible={calenderModalVisible}
+        transparent
+        onRequestClose={closeCalenderModal}
+      >
+        <TouchableWithoutFeedback onPress={closeCalenderModal}>
+          <View style={styles.modalOverlayCat}>
+            <View style={styles.modalViewCalender}>
+              <View style={{ marginTop: 0 }}>
+                <Text style={styles.amountFilter}> Filter By Calendar</Text>
+                <CalenderRange setStartDate={setStartDate} setEndDate={setEndDate} />
+                <TouchableOpacity
+                  style={styles.applyButtonCalender}
+                  onPress={applyCalendarFilter}
+                >
+                  <Text style={styles.applyButtonText}>Apply</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </SafeAreaView>
   );
 };
 
-export default SearchFilter;
+export default SearchFilter; 

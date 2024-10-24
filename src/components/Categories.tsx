@@ -7,14 +7,14 @@ import { addCategory } from '../redux/BudgetAction'
 import styles from '../styles/Categories'
 import OctiIcon from 'react-native-vector-icons/Octicons'
 
-const Categories = ({ navigation, route }: any) => {
+const Categories = ({ navigation }: any) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearch, setIsSearch] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const categories = useSelector((state: any) => state.budget.categories);
-  const dispatch = useDispatch();
   const id = categories.length ? Math.max(...categories.map((cat: any) => cat.id)) + 1 : 1;
 
   const searchCategory = categories.filter((cat: any) =>
@@ -24,11 +24,9 @@ const Categories = ({ navigation, route }: any) => {
     setSearchQuery(query);
   };
 
-  // console.log('categories --->', categories)
   console.log('Categories ---> ', JSON.stringify(categories))
   const onSubmit = () => {
     setVisible(false);
-    console.log('Data ---> ', name)
     dispatch(addCategory(id, name));
     setName('');
   };
@@ -62,12 +60,15 @@ const Categories = ({ navigation, route }: any) => {
         ) : (
           <View style={styles.titleContainer}>
             <OctiIcon name='file-directory' size={20} style={styles.octiIcon} />
-            <Text style={styles.main}>Categories</Text>
+            <Text style={styles.main}>Categories </Text>
+            <Text style={styles.length}>{categories.length}</Text>
           </View>
         )}
+        {!isSearch && (
         <TouchableOpacity onPress={() => setIsSearch(true)} style={styles.searchButton}>
           <Icon name='search' size={20} style={styles.searchIcon} />
         </TouchableOpacity>
+        )}
       </View>
       <View style={styles.overlay}>
         <Modal
@@ -106,6 +107,9 @@ const Categories = ({ navigation, route }: any) => {
               <TouchableOpacity onPress={() => handleCategory(item)}>
                 <View style={styles.listItem}>
                   <Text style={styles.itemText}>{item.name}</Text>
+                  <View style={styles.countCircle}>
+                    <Text style={styles.countText}>{item.subcategories ? item.subcategories.length : 0}</Text>
+                  </View>
                 </View>
               </TouchableOpacity>
             )}

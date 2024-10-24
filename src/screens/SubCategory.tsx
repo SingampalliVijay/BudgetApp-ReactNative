@@ -27,8 +27,6 @@ const SubCategory = ({ route }: any) => {
     setSearchQuery(query);
   };
 
-  console.log('Subcategories list --->', subcategory);
-
   const onSubmit = () => {
     setVisible(false);
     dispatch(addSubcategory(id, name, category));
@@ -57,12 +55,15 @@ const SubCategory = ({ route }: any) => {
           </View>
         ) : (
           <View style={styles.titleContainer}>
-            <Text style={styles.main}>{category} Subcategories</Text>
+            <Text style={styles.main}>{category} Subcategories  </Text>
+            <Text style={styles.length}>{searchSubcategory.length}</Text>
           </View>
         )}
+        {!isSearch && (
         <TouchableOpacity onPress={() => setIsSearch(true)} style={styles.searchButton}>
           <Icon name='search' size={20} style={styles.searchIcon} />
         </TouchableOpacity>
+        )}
       </View>
       <Modal
         animationType="fade"
